@@ -17,6 +17,8 @@ echo
 NEMO_EXTENSIONS=~/.local/share/nemo-python/extensions
 mkdir -p $NEMO_EXTENSIONS
 cp -v ZumMaschineNemo.py $NEMO_EXTENSIONS
+echo
+nemo -q
 
 echo
 echo "--------------------------"
@@ -28,4 +30,6 @@ echo
 NAUTILUS_EXTENSIONS=~/.local/share/nautilus-python/extensions
 mkdir -p $NAUTILUS_EXTENSIONS
 cp -v ZumMaschineNautilus.py $NAUTILUS_EXTENSIONS
+echo
+nautilus -q
 
