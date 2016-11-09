@@ -18,38 +18,38 @@ class ColumnExtension(GObject.GObject, FileManager.MenuProvider):
   def __init__(self):
     pass
 
+  #------------------------------------------------------------------------------------------------------------------------------
+
   def menu_activate_cb(self, menu, file):
   
+    # Get complete filename path
+    filename = file.get_uri()[len("//file:"):]
+
     # Get directory structure till Autraege
-    folders = file.get_uri().split("/")
+    folders = filename.split("/")
     folders.pop(-1) # Remove filename
     
-    foundFolders = list()
-    foundBaseFolder = False
-    for currentFolder in folders:
-      if currentFolder == self.DEFAULT_BASE_FOLDER:
-        foundBaseFolder = True
-        continue
-        
-      if foundBaseFolder:
-        foundFolders.append(currentFolder)
+    for i, folder in enumerate(folders):
+      if folder == self.DEFAULT_BASE_FOLDER:
+        folders[i] = self.DEFAULT_MASCHINE_FOLDER
        
     # Prepare copy path
-    copyPathList = [".." for x in range(len(foundFolders) + 1)]
-    copyPathList.append(self.DEFAULT_MASCHINE_FOLDER)
-    copyPathList = copyPathList + foundFolders
-    copyPath = "/".join(copyPathList)
+    copyPath = "/".join(folders)
        
     # Create directory 
     try:
       os.makedirs(copyPath)
     except:
-      print "copyPath: " + copyPath
+      self.debug("Cant' create directories: " + copyPath)
+      return
     
     # Copy dxf file
-    shutil.copy(file.get_uri()[7:],
+    shutil.copy(filename,
                 copyPath)
     
+    self.debug("File " + filename + " copied to " + copyPath)
+    
+  #------------------------------------------------------------------------------------------------------------------------------
 
   def get_file_items(self, window, files):
 
@@ -76,4 +76,10 @@ class ColumnExtension(GObject.GObject, FileManager.MenuProvider):
     item.connect('activate', self.menu_activate_cb, file)
     
     return [item]
+
+  #------------------------------------------------------------------------------------------------------------------------------
+
+  def debug(self, message):
+    print "ZumMaschine: " + message
+
     
