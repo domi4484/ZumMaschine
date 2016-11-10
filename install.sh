@@ -12,7 +12,7 @@ echo "----------------------"
 echo "Install Nemo extension"
 echo "----------------------"
 echo
-sudo apt-get install python-nemo
+sudo apt-get install -y python-nemo
 echo
 NEMO_EXTENSIONS=~/.local/share/nemo-python/extensions
 mkdir -p $NEMO_EXTENSIONS
@@ -25,7 +25,7 @@ echo "--------------------------"
 echo "Install Nautilus extension"
 echo "--------------------------"
 echo
-sudo apt-get install python-nautilus
+sudo apt-get install -y python-nautilus
 echo
 NAUTILUS_EXTENSIONS=~/.local/share/nautilus-python/extensions
 mkdir -p $NAUTILUS_EXTENSIONS
