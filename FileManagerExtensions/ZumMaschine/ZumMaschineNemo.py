@@ -10,7 +10,7 @@ import getpass
 import os
 import shutil
 
-class ColumnExtension(GObject.GObject, FileManager.MenuProvider):
+class ZumMaschineExtension(GObject.GObject, FileManager.MenuProvider):
 
   DEFAULT_BASE_FOLDER     = "Auftraege"
   DEFAULT_MASCHINE_FOLDER = "Maschine"
