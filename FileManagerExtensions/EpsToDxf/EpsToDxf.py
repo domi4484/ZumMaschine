@@ -25,21 +25,20 @@ class EpsToDxfExtension(GObject.GObject, FileManager.MenuProvider):
     filenameEps = file.get_uri()[len("//file:"):]
 
     # Default result filename
-    filenameDxf = filenameEps
-    filenameDxf.replace('.eps', '.dxf')
+    filenameDxf = filenameEps.replace('.eps', '.dxf')
     
     # Copy dxf file
-    command = ['pstoedit', '-f', '"dxf:mm"', filenameEps, filenameDxf]
+    command = ['pstoedit', '-f', 'dxf:-mm', filenameEps, filenameDxf]
     process = subprocess.Popen(command, stdout=subprocess.PIPE)
     output, error = process.communicate()
     self.debug("pstoedit output: " + output)
-    self.debug("pstoedit error: " + error)
+    self.debug("pstoedit error: " + str(error))
+    self.debug("")
     self.debug("File " + filenameEps + " converted to " + filenameDxf)
     
   #------------------------------------------------------------------------------------------------------------------------------
 
   def get_file_items(self, window, files):
-    self.debug("ciao")
     # Only one file
     if len(files) != 1:
       return
@@ -51,8 +50,8 @@ class EpsToDxfExtension(GObject.GObject, FileManager.MenuProvider):
       return
 
     # Create menu item
-    item = FileManager.MenuItem(name  = "ExampleMenuProvider::Zumdxfkonvertieren",
-                                label = "Zumdxfkonvertieren",
+    item = FileManager.MenuItem(name  = "Zumdxfkonvertieren",
+                                label = "Zum dxf konvertieren",
                                 tip   = "Zum dxf konvertieren %s" % file.get_name(),
                                 icon  = "/home/" + getpass.getuser() + "/.local/share/lowercut/FileManagerExtensions/EpsToDxf/Dxf.png"
                                )
