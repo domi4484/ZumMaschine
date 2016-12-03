@@ -8,16 +8,22 @@ echo
 sudo apt-get install -y python-nemo python-nautilus pstoedit
 
 echo
-echo "----------------------"
+echo "----------------"
 echo "Install EpsToDxf"
-echo "----------------------"
+echo "----------------"
 echo
-EpsToDxf/install.sh
+cd EpsToDxf
+source install.sh
+installExtensionEpsToDxf
+cd "$(dirname "$0")"
 
 echo
 echo "-------------------"
 echo "Install ZumMaschine"
 echo "-------------------"
 echo
-ZumMaschine/install.sh
-
+cd ZumMaschine
+source install.sh
+installExtensionZumMaschine
+cd "$(dirname "$0")"
+  
