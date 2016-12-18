@@ -4,6 +4,8 @@
 #include "ui_MainWindow.h"
 
 // Project includes ------------------------
+#include "Settings.h"
+#include "Settings_Gui.h"
 
 // Qt includes -----------------------------
 #include <QDebug>
@@ -22,10 +24,15 @@ MainWindow::MainWindow(QWidget *parent) :
   m_QSystemTrayIcon.setIcon(QIcon(":/Icons/Icons/ZumMaschine.png"));
   m_QSystemTrayIcon.show();
 
+  // Settings
+  m_Settings = new Settings(this);
+
+  // Signals slot
   connect(&m_QSystemTrayIcon,
           SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
           SLOT(slot_QSystemTrayIcon_activated(QSystemTrayIcon::ActivationReason)));
 
+  // Hide main window
   QTimer::singleShot(0, this, SLOT(hide()));
 }
 
@@ -34,6 +41,22 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
   delete m_Ui;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void MainWindow::on_m_QAction_File_Settings_triggered()
+{
+  Settings_Gui settings_Gui(m_Settings,
+                            this);
+  settings_Gui.exec();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void MainWindow::on_m_QAction_File_Exit_triggered()
+{
+  QApplication::quit();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

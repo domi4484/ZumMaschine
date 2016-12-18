@@ -31,11 +31,16 @@ target.path = "$$_PRO_FILE_PWD_/../bin/$$PLATFORM"
 INSTALLS *= target
 
 SOURCES += main.cpp\
-           MainWindow.cpp
+           MainWindow.cpp \
+    Settings.cpp \
+    Settings_Gui.cpp
 
-HEADERS  += MainWindow.h
+HEADERS  += MainWindow.h \
+    Settings.h \
+    Settings_Gui.h
 
-FORMS    += MainWindow.ui
+FORMS    += MainWindow.ui \
+    Settings_Gui.ui
 
 RESOURCES += \
     Resources/Resources.qrc

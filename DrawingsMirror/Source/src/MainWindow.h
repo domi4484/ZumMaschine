@@ -7,7 +7,7 @@
 
 // Forward declarations --------------------
 namespace Ui { class MainWindow; }
-class RulerDialog;
+class Settings;
 
 class MainWindow : public QMainWindow
 {
@@ -20,6 +20,9 @@ public:
     
 private slots:
 
+  void on_m_QAction_File_Settings_triggered();
+  void on_m_QAction_File_Exit_triggered();
+
   void slot_QSystemTrayIcon_activated(QSystemTrayIcon::ActivationReason activationReason);
 
 protected:
@@ -31,6 +34,8 @@ private:
   Ui::MainWindow *m_Ui;
 
   QSystemTrayIcon m_QSystemTrayIcon;
+
+  Settings *m_Settings;
 
 };
 
