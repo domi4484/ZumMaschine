@@ -8,6 +8,8 @@
 // Forward declarations --------------------
 namespace Ui { class MainWindow; }
 class Settings;
+class QFileSystemModel;
+class QFileSystemWatcher;
 
 class MainWindow : public QMainWindow
 {
@@ -36,6 +38,10 @@ private:
   QSystemTrayIcon m_QSystemTrayIcon;
 
   Settings *m_Settings;
+
+  QFileSystemModel *m_QFileSystemModel;
+
+  QFileSystemWatcher *m_QFileSystemWatcher;
 
 };
 

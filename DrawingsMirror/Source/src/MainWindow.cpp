@@ -10,13 +10,17 @@
 // Qt includes -----------------------------
 #include <QDebug>
 #include <QTimer>
+#include <QFileSystemModel>
+#include <QFileSystemWatcher>
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
   m_Ui(new Ui::MainWindow),
-  m_QSystemTrayIcon()
+  m_QSystemTrayIcon(),
+  m_QFileSystemModel(NULL),
+  m_QFileSystemWatcher(NULL)
 {
   // Qt ui setup
   m_Ui->setupUi(this);
@@ -26,6 +30,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
   // Settings
   m_Settings = new Settings(this);
+
+  // Filesystem model
+  m_QFileSystemModel = new QFileSystemModel;
+  m_QFileSystemModel->setRootPath(m_Settings->get_Mirror_DirectorySource());
+  m_Ui->m_QTreeView_FileSystem->setModel(m_QFileSystemModel);
+  m_Ui->m_QTreeView_FileSystem->setRootIndex(m_QFileSystemModel->index(m_Settings->get_Mirror_DirectorySource()));
+
+  // Filesystem watcher
+  m_QFileSystemWatcher = new
 
   // Signals slot
   connect(&m_QSystemTrayIcon,
@@ -40,6 +53,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+  delete m_QFileSystemModel;
+
   delete m_Ui;
 }
 
@@ -49,7 +64,11 @@ void MainWindow::on_m_QAction_File_Settings_triggered()
 {
   Settings_Gui settings_Gui(m_Settings,
                             this);
-  settings_Gui.exec();
+  if(settings_Gui.exec() == QDialog::Rejected)
+    return;
+
+  m_QFileSystemModel->setRootPath(m_Settings->get_Mirror_DirectorySource());
+  m_Ui->m_QTreeView_FileSystem->setRootIndex(m_QFileSystemModel->index(m_Settings->get_Mirror_DirectorySource()));
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

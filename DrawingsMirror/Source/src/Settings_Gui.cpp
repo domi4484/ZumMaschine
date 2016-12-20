@@ -44,3 +44,29 @@ void Settings_Gui::slot_Dialog_accepted()
   m_Settings->set_Mirror_DirectoryDestination(m_Ui->m_QLineEdit_Mirror_Destination->text());
   m_Settings->set_Mirror_Active(m_Ui->m_QCheckBox_MirrorActive->isChecked());
 }
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Settings_Gui::on_m_QToolButton_Mirror_Source_clicked()
+{
+  QString sourceDirectory = QFileDialog::getExistingDirectory(this,
+                                                              tr("Select source directory for mirroring"));
+
+  if(sourceDirectory.isEmpty())
+    return;
+
+  m_Ui->m_QLineEdit_Mirror_Source->setText(sourceDirectory);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Settings_Gui::on_m_QToolButton_Mirror_Destination_clicked()
+{
+  QString destinationDirectory = QFileDialog::getExistingDirectory(this,
+                                                                   tr("Select destination directory for mirroring"));
+
+  if(destinationDirectory.isEmpty())
+    return;
+
+  m_Ui->m_QLineEdit_Mirror_Destination->setText(destinationDirectory);
+}

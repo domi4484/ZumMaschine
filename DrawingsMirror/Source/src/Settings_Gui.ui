@@ -39,7 +39,7 @@
       <item row="2" column="1">
        <widget class="QToolButton" name="m_QToolButton_Mirror_Source">
         <property name="text">
-         <string/>
+         <string>...</string>
         </property>
        </widget>
       </item>
@@ -49,7 +49,7 @@
       <item row="4" column="1">
        <widget class="QToolButton" name="m_QToolButton_Mirror_Destination">
         <property name="text">
-         <string/>
+         <string>...</string>
         </property>
        </widget>
       </item>
