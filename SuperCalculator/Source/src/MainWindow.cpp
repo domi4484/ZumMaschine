@@ -30,8 +30,8 @@ MainWindow::MainWindow(QWidget *parent) :
   m_QList_Pieces.append(part);
 
   QTreeWidgetItem *qTreeWidgetItem = new QTreeWidgetItem();
-  part->setTreeWidgetItem(qTreeWidgetItem);
   m_Ui->m_QTreeWidget->addTopLevelItem(qTreeWidgetItem);
+  part->setupTreeWidgetItem(qTreeWidgetItem);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

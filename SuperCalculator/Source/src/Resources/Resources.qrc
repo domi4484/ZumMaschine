@@ -1,5 +1,3 @@
 <RCC>
-    <qresource prefix="/Icons">
-        <file>Icons/ZumMaschine.png</file>
-    </qresource>
+    <qresource prefix="/Icons"/>
 </RCC>
