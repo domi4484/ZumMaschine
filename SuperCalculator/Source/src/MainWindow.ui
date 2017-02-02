@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>687</width>
+    <height>366</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Drawings Mirror</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QTreeWidget" name="m_QTreeWidget">
+      <column>
+       <property name="text">
+        <string>Name</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Breite</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Höhe</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Dicke</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Schneidlänge</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Werkstoff</string>
+       </property>
+      </column>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>687</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="m_QAction_File_Settings"/>
+    <addaction name="separator"/>
+    <addaction name="m_QAction_File_Exit"/>
+   </widget>
+   <addaction name="menuFile"/>
+  </widget>
+  <action name="m_QAction_File_Exit">
+   <property name="text">
+    <string>&amp;Exit</string>
+   </property>
+  </action>
+  <action name="m_QAction_File_Settings">
+   <property name="text">
+    <string>&amp;Settings</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
