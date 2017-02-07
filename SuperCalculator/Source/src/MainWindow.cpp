@@ -59,3 +59,37 @@ void MainWindow::on_m_QAction_File_Exit_triggered()
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
+
+void MainWindow::on_m_QSpinBox_Pieces_valueChanged(int arg1)
+{
+
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void MainWindow::on_m_QDoubleSpinBox_Width_valueChanged(double arg1)
+{
+
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void MainWindow::on_m_QDoubleSpinBox_Height_valueChanged(double arg1)
+{
+
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void MainWindow::on_m_QDoubleSpinBox_Thickness_valueChanged(double arg1)
+{
+
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void MainWindow::on_m_QDoubleSpinBox_CutLength_valueChanged(double arg1)
+{
+
+}
+
