@@ -44,7 +44,10 @@ private:
 
   Settings *m_Settings;
 
-  QList<Part *> m_QList_Pieces;
+  Part *m_CurrentPart;
+  QList<Part *> m_QList_Parts;
+
+  void updatePart();
 };
 
 #endif // MAINWINDOW_H

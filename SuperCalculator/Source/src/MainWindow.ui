@@ -47,7 +47,17 @@
      </widget>
     </item>
     <item row="1" column="2">
-     <widget class="QDoubleSpinBox" name="m_QDoubleSpinBox_Width"/>
+     <widget class="QDoubleSpinBox" name="m_QDoubleSpinBox_Width">
+      <property name="decimals">
+       <number>1</number>
+      </property>
+      <property name="minimum">
+       <double>1.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>10000.000000000000000</double>
+      </property>
+     </widget>
     </item>
     <item row="0" column="4">
      <widget class="QLabel" name="label_4">
@@ -57,7 +67,17 @@
      </widget>
     </item>
     <item row="1" column="3">
-     <widget class="QDoubleSpinBox" name="m_QDoubleSpinBox_Height"/>
+     <widget class="QDoubleSpinBox" name="m_QDoubleSpinBox_Height">
+      <property name="decimals">
+       <number>1</number>
+      </property>
+      <property name="minimum">
+       <double>1.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>10000.000000000000000</double>
+      </property>
+     </widget>
     </item>
     <item row="3" column="0" colspan="7">
      <widget class="QTreeWidget" name="m_QTreeWidget">
@@ -94,7 +114,17 @@
      </widget>
     </item>
     <item row="1" column="4">
-     <widget class="QDoubleSpinBox" name="m_QDoubleSpinBox_Thickness"/>
+     <widget class="QDoubleSpinBox" name="m_QDoubleSpinBox_Thickness">
+      <property name="decimals">
+       <number>1</number>
+      </property>
+      <property name="minimum">
+       <double>0.100000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>300.000000000000000</double>
+      </property>
+     </widget>
     </item>
     <item row="1" column="6">
      <widget class="QComboBox" name="m_QComboBox_Material"/>
@@ -114,7 +144,14 @@
      </widget>
     </item>
     <item row="1" column="5">
-     <widget class="QDoubleSpinBox" name="m_QDoubleSpinBox_CutLength"/>
+     <widget class="QDoubleSpinBox" name="m_QDoubleSpinBox_CutLength">
+      <property name="minimum">
+       <double>0.010000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>900000.000000000000000</double>
+      </property>
+     </widget>
     </item>
     <item row="1" column="1">
      <widget class="QSpinBox" name="m_QSpinBox_Pieces"/>

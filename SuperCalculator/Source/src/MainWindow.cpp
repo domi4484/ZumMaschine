@@ -17,7 +17,9 @@
 
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
-  m_Ui(new Ui::MainWindow)
+  m_Ui(new Ui::MainWindow),
+  m_CurrentPart(NULL),
+  m_QList_Parts()
 {
   // Qt ui setup
   m_Ui->setupUi(this);
@@ -27,7 +29,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
   // Default Piece
   Part *part = new Part();
-  m_QList_Pieces.append(part);
+  m_QList_Parts.append(part);
+  m_CurrentPart = part;
 
   QTreeWidgetItem *qTreeWidgetItem = new QTreeWidgetItem();
   m_Ui->m_QTreeWidget->addTopLevelItem(qTreeWidgetItem);
@@ -38,6 +41,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+  while(m_QList_Parts.isEmpty() == false)
+  {
+    delete m_QList_Parts.takeLast();
+  }
+
   delete m_Ui;
 }
 
@@ -62,34 +70,45 @@ void MainWindow::on_m_QAction_File_Exit_triggered()
 
 void MainWindow::on_m_QSpinBox_Pieces_valueChanged(int arg1)
 {
-
+  m_CurrentPart->setCount(arg1);
+  updatePart();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 void MainWindow::on_m_QDoubleSpinBox_Width_valueChanged(double arg1)
 {
-
+  m_CurrentPart->setWidth_mm(arg1);
+  updatePart();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 void MainWindow::on_m_QDoubleSpinBox_Height_valueChanged(double arg1)
 {
-
+  m_CurrentPart->setHeight_mm(arg1);
+  updatePart();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 void MainWindow::on_m_QDoubleSpinBox_Thickness_valueChanged(double arg1)
 {
-
+  m_CurrentPart->setThickness_mm(arg1);
+  updatePart();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 void MainWindow::on_m_QDoubleSpinBox_CutLength_valueChanged(double arg1)
 {
-
+  m_CurrentPart->setCutLenght_m(arg1);
+  updatePart();
 }
 
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void MainWindow::updatePart()
+{
+  m_Ui->m_QLabel_Total->setText(QString::number(m_CurrentPart->getPrice()));
+}
