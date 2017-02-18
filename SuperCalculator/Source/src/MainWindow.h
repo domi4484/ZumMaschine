@@ -11,6 +11,7 @@
 // Forward declarations --------------------
 namespace Ui { class MainWindow; }
 class Settings;
+class Material;
 class QFileSystemModel;
 class QFileSystemWatcher;
 
@@ -29,13 +30,9 @@ private slots:
   void on_m_QAction_File_Exit_triggered();
 
   void on_m_QSpinBox_Pieces_valueChanged(int arg1);
-
   void on_m_QDoubleSpinBox_Width_valueChanged(double arg1);
-
   void on_m_QDoubleSpinBox_Height_valueChanged(double arg1);
-
   void on_m_QDoubleSpinBox_Thickness_valueChanged(double arg1);
-
   void on_m_QDoubleSpinBox_CutLength_valueChanged(double arg1);
 
 private:
@@ -44,9 +41,12 @@ private:
 
   Settings *m_Settings;
 
+  QMap<QString, Material *> m_QMap_Materials;
+
   Part *m_CurrentPart;
   QList<Part *> m_QList_Parts;
 
+  void loadMaterials();
   void updatePart();
 };
 

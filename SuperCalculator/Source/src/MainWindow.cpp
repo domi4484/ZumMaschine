@@ -27,6 +27,9 @@ MainWindow::MainWindow(QWidget *parent) :
   // Settings
   m_Settings = new Settings(this);
 
+  // Load materials
+  loadMaterials();
+
   // Default Piece
   Part *part = new Part();
   m_QList_Parts.append(part);
@@ -104,6 +107,13 @@ void MainWindow::on_m_QDoubleSpinBox_CutLength_valueChanged(double arg1)
 {
   m_CurrentPart->setCutLenght_m(arg1);
   updatePart();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void MainWindow::loadMaterials()
+{
+  QFileInfoList qFileInfoList
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
