@@ -113,7 +113,7 @@ void MainWindow::on_m_QDoubleSpinBox_CutLength_valueChanged(double arg1)
 
 void MainWindow::loadMaterials()
 {
-  QFileInfoList qFileInfoList
+
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
