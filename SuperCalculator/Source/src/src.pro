@@ -36,18 +36,23 @@ SOURCES += main.cpp\
     Settings_Gui.cpp \
     TreeWidgetItem.cpp \
     Part.cpp \
-    Material.cpp
+    Material.cpp \
+    Exception.cpp
 
 HEADERS  += MainWindow.h \
     Settings.h \
     Settings_Gui.h \
     TreeWidgetItem.h \
     Part.h \
-    Material.h
+    Material.h \
+    Exception.h
 
 FORMS    += MainWindow.ui \
     Settings_Gui.ui
 
 RESOURCES += \
     Resources/Resources.qrc
+
+DISTFILES += \
+    ../bin/Werkstoffen/Stahl.material.json
 

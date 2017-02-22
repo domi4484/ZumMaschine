@@ -4,6 +4,8 @@
 #include "ui_MainWindow.h"
 
 // Project includes ------------------------
+#include "Exception.h"
+#include "Material.h"
 #include "Settings.h"
 #include "Settings_Gui.h"
 
@@ -12,6 +14,7 @@
 #include <QTimer>
 #include <QFileSystemModel>
 #include <QFileSystemWatcher>
+#include <QMessageBox>
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
@@ -113,7 +116,40 @@ void MainWindow::on_m_QDoubleSpinBox_CutLength_valueChanged(double arg1)
 
 void MainWindow::loadMaterials()
 {
+  // Get material files
+  QDir qDir(Material::_CONST::LOCATION);
+  QFileInfoList qFileInfoList = qDir.entryInfoList(QStringList() << "*" + Material::_CONST::FILENAME_EXTENSION,
+                                                   QDir::Files);
 
+  if(qFileInfoList.isEmpty())
+  {
+     QMessageBox::critical(this,
+                           tr("Error opening material file."),
+                           tr("No material files found in '%1'.").arg(qDir.absolutePath()));
+  }
+
+  // Clear materials in Gui
+  m_Ui->m_QComboBox_Material->clear();
+
+  // Load Material files
+  foreach (QFileInfo qFileInfo, qFileInfoList)
+  {
+    Material *material = new Material(qFileInfo);
+    try
+    {
+      material->Load();
+      m_QMap_Materials.insert(material->Name(),
+                              material);
+
+      m_Ui->m_QComboBox_Material->addItem(material->Name());
+    }
+    catch(const Exception &exception)
+    {
+      QMessageBox::critical(this,
+                            tr("Error opening material file."),
+                            exception.GetText());
+    }
+  }
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
