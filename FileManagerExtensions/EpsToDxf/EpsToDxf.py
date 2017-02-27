@@ -28,7 +28,8 @@ class EpsToDxfExtension(GObject.GObject, FileManager.MenuProvider):
     filenameDxf = filenameEps.replace('.eps', '.dxf')
     
     # Copy dxf file
-    command = ['pstoedit', '-f', 'dxf:-mm', filenameEps, filenameDxf]
+    command = ['pstoedit', '-f', 'dxf:-mm' , filenameEps, filenameDxf]
+    # pstoedit -f "dxf_s: -mm -splineaspolyline -splineprecision 8"  OldCaptain_300x300_3.eps OldCaptain_300x300_3.dxf
     process = subprocess.Popen(command, stdout=subprocess.PIPE)
     output, error = process.communicate()
     self.debug("pstoedit output: " + output)
