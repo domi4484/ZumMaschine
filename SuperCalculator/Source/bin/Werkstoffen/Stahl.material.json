@@ -1,0 +1,15 @@
+{
+  "name": "Stahl",
+  "thickness": [
+    {
+      "thickness":2,
+      "surfaceValue":25,
+      "cutValue":7
+    },
+    {
+      "thickness":4,
+      "surfaceValue":50,
+      "cutValue":12
+    }
+  ]
+}

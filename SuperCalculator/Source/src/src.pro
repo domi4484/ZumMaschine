@@ -25,9 +25,9 @@ else:win32 {
 isEmpty (PLATFORM):   error (PLATFORM is undefined.)
 
 INCLUDEPATH *= "$$_PRO_FILE_PWD_/"
-DESTDIR = "$$_PRO_FILE_PWD_/../bin/$$PLATFORM"
+DESTDIR = "$$_PRO_FILE_PWD_/../bin"
 # Installation on the target
-target.path = "$$_PRO_FILE_PWD_/../bin/$$PLATFORM"
+target.path = "$$_PRO_FILE_PWD_/../bin"
 INSTALLS *= target
 
 SOURCES += main.cpp\
@@ -35,17 +35,24 @@ SOURCES += main.cpp\
     Settings.cpp \
     Settings_Gui.cpp \
     TreeWidgetItem.cpp \
-    Part.cpp
+    Part.cpp \
+    Material.cpp \
+    Exception.cpp
 
 HEADERS  += MainWindow.h \
     Settings.h \
     Settings_Gui.h \
     TreeWidgetItem.h \
-    Part.h
+    Part.h \
+    Material.h \
+    Exception.h
 
 FORMS    += MainWindow.ui \
     Settings_Gui.ui
 
 RESOURCES += \
     Resources/Resources.qrc
+
+DISTFILES += \
+    ../bin/Werkstoffen/Stahl.material.json
 
