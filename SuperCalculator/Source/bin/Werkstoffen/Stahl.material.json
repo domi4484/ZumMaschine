@@ -1,6 +1,6 @@
 {
   "name": "Stahl",
-  "thickness": [
+  "values": [
     {
       "thickness":2,
       "surfaceValue":25,
