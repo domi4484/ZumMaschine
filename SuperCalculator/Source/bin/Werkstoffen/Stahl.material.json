@@ -3,8 +3,8 @@
   "thickness": [
     {
       "thickness":2,
-      "surfaceValue":25,
-      "cutValue":7
+      "surfaceValue":30,
+      "cutValue":9
     },
     {
       "thickness":3,
@@ -14,7 +14,7 @@
     {
       "thickness":4,
       "surfaceValue":90,
-      "cutValue":13
+      "cutValue":15
     }
   ]
 }
