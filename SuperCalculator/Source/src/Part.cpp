@@ -2,6 +2,9 @@
 // File includes ---------------------------
 #include "Part.h"
 
+// Projekt includes ------------------------
+#include "Material.h"
+
 // Qt includes -----------------------------
 #include <QLineEdit>
 #include <QDoubleSpinBox>
@@ -9,13 +12,13 @@
 
 Part::Part(QObject *parent) :
   QObject(parent),
-  m_Name     (),
-  m_Count       (),
-  m_Width_mm    (),
-  m_Height_mm   (),
-  m_Thickness_mm    (),
-  m_CutLenght_m (),
-  m_Material    (),
+  m_Name         (),
+  m_Count        (),
+  m_Width_mm     (),
+  m_Height_mm    (),
+  m_Thickness_mm (),
+  m_CutLenght_m  (),
+  m_Material     (NULL),
   m_QLineEdit_Name           (NULL),
   m_QDoubleSpinBox_Width     (NULL),
   m_QDoubleSpinBox_Height    (NULL),
@@ -128,8 +131,9 @@ void Part::setCutLenght_m(double cutLength_m)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void Part::setMaterial()
+void Part::setMaterial(Material *material)
 {
+  m_Material = material;
   calculate();
 }
 
@@ -137,11 +141,16 @@ void Part::setMaterial()
 
 void Part::calculate()
 {
+  if(m_Material == NULL)
+    return;
+
   m_Surface_m2 = (m_Width_mm/1000.0) * (m_Height_mm/1000.0);
   m_Volume_m3 = m_Surface_m2 * m_Thickness_mm/1000.0;
 
-  m_CutPrice = m_CutLenght_m * 15;
-  m_CutPriceTot = m_CutPrice * m_Count;
+  m_SurfacePrice = m_Surface_m2 * m_Material->getSurfaceValue(m_Thickness_mm);
+
+  m_CutPrice = m_CutLenght_m * m_Material->getCutValue(m_Thickness_mm);
+  m_CutPriceTot = m_CutPrice * m_Count + m_SurfacePrice * m_Count;
 
   m_Price = m_CutPriceTot;
 }

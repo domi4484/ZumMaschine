@@ -8,6 +8,7 @@
 // Qt includes -----------------------------
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QJsonArray>
 #include <QDebug>
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -17,10 +18,16 @@ const QString Material::_CONST::FILENAME_EXTENSION (".material.json");
 
 const QString Material::_CONST::JSON::NAME ("name");
 
+const QString Material::_CONST::JSON::VALUES::ROOT_NAME    ("values");
+const QString Material::_CONST::JSON::VALUES::THICKNESS    ("thickness");
+const QString Material::_CONST::JSON::VALUES::SURFACEVALUE ("surfaceValue");
+const QString Material::_CONST::JSON::VALUES::CUTVALUE     ("cutValue");
+
 //-----------------------------------------------------------------------------------------------------------------------------
 
 Material::Material(const QFileInfo &qFileInfo) :
-  m_QFileInfo(qFileInfo)
+  m_QFileInfo(qFileInfo),
+  m_QMap_Values()
 {
 
 }
@@ -51,17 +58,56 @@ void Material::Load()
     throw Exception(QString("Can't parse '%1' -> %2").arg(m_QFileInfo.filePath())
                                                      .arg(qJsonParseError.errorString()));
   }
-
   QJsonObject qJsonObject = qJsonDocument.object();
   QJsonValue qJsonValue_Name = qJsonObject.value(_CONST::JSON::NAME);
+
+  // Name
   m_Name = qJsonValue_Name.toString();
+
+  // Values
+  m_QMap_Values.clear();
+  QJsonArray jsonArray_Values = qJsonObject.value(_CONST::JSON::VALUES::ROOT_NAME).toArray();
+  for(int i = 0; i < jsonArray_Values.size(); i++)
+  {
+    QJsonObject jsonObject_Value = jsonArray_Values.at(i).toObject();
+
+    Value value;
+
+    value.m_Thickness    = jsonObject_Value.value(_CONST::JSON::VALUES::THICKNESS).toDouble();
+    value.m_SurfaceValue = jsonObject_Value.value(_CONST::JSON::VALUES::SURFACEVALUE).toDouble();
+    value.m_CutValue     = jsonObject_Value.value(_CONST::JSON::VALUES::CUTVALUE).toDouble();
+
+    m_QMap_Values.insert(value.m_Thickness,
+                         value);
+  } // for
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-QString Material::Name() const
+QString Material::getName() const
 {
   return m_Name;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+QList<double> Material::getThicknessList() const
+{
+  return m_QMap_Values.keys();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+double Material::getSurfaceValue(double thickness) const
+{
+  return m_QMap_Values.value(thickness).m_SurfaceValue;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+double Material::getCutValue(double thickness) const
+{
+  return m_QMap_Values.value(thickness).m_CutValue;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

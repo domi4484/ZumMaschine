@@ -30,13 +30,13 @@ MainWindow::MainWindow(QWidget *parent) :
   // Settings
   m_Settings = new Settings(this);
 
-  // Load materials
-  loadMaterials();
-
   // Default Piece
   Part *part = new Part();
   m_QList_Parts.append(part);
   m_CurrentPart = part;
+
+  // Load materials
+  loadMaterials();
 
   QTreeWidgetItem *qTreeWidgetItem = new QTreeWidgetItem();
   m_Ui->m_QTreeWidget->addTopLevelItem(qTreeWidgetItem);
@@ -98,14 +98,6 @@ void MainWindow::on_m_QDoubleSpinBox_Height_valueChanged(double arg1)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void MainWindow::on_m_QDoubleSpinBox_Thickness_valueChanged(double arg1)
-{
-  m_CurrentPart->setThickness_mm(arg1);
-  updatePart();
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
 void MainWindow::on_m_QDoubleSpinBox_CutLength_valueChanged(double arg1)
 {
   m_CurrentPart->setCutLenght_m(arg1);
@@ -138,10 +130,10 @@ void MainWindow::loadMaterials()
     try
     {
       material->Load();
-      m_QMap_Materials.insert(material->Name(),
+      m_QMap_Materials.insert(material->getName(),
                               material);
 
-      m_Ui->m_QComboBox_Material->addItem(material->Name());
+      m_Ui->m_QComboBox_Material->addItem(material->getName());
     }
     catch(const Exception &exception)
     {
@@ -157,4 +149,31 @@ void MainWindow::loadMaterials()
 void MainWindow::updatePart()
 {
   m_Ui->m_QLabel_Total->setText(QString::number(m_CurrentPart->getPrice()));
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void MainWindow::on_m_QComboBox_Thickness_currentIndexChanged(const QString &value)
+{
+  if(value.isEmpty())
+    return;
+
+  m_CurrentPart->setThickness_mm(value.toDouble());
+  updatePart();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void MainWindow::on_m_QComboBox_Material_currentIndexChanged(const QString &value)
+{
+  qDebug() << "on_m_QComboBox_Material_currentIndexChanged";
+
+  Material *material = m_QMap_Materials.value(value);
+  m_CurrentPart->setMaterial(material);
+
+  m_Ui->m_QComboBox_Thickness->clear();
+  foreach (double thickness, material->getThicknessList())
+  {
+    m_Ui->m_QComboBox_Thickness->addItem(QString::number(thickness));
+  }
 }
