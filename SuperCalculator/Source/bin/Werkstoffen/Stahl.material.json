@@ -4,17 +4,17 @@
     {
       "thickness":2,
       "surfaceValue":30,
-      "cutValue":9
+      "cutValue":10
     },
     {
       "thickness":3,
       "surfaceValue":60,
-      "cutValue":12
+      "cutValue":13
     },
     {
       "thickness":4,
       "surfaceValue":90,
-      "cutValue":15
+      "cutValue":16
     }
   ]
 }
