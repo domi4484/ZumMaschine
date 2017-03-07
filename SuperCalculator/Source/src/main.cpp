@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
   // Application informations
   qApplication.setOrganizationName   ("Lowerspot");
   qApplication.setOrganizationDomain ("lowerspot.com");
-  qApplication.setApplicationName    ("Drawings Mirror");
+  qApplication.setApplicationName    ("Parts Calculator");
   qApplication.setApplicationVersion ("V0.0.1");
 
 

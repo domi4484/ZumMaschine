@@ -8,6 +8,7 @@ class Exception : public QException
 {
 public:
   Exception(const QString &text);
+  virtual ~Exception() throw();
 
   QString GetText() const;
 

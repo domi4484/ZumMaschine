@@ -27,6 +27,9 @@ MainWindow::MainWindow(QWidget *parent) :
   // Qt ui setup
   m_Ui->setupUi(this);
 
+  setWindowTitle(QString("%1 - %2").arg(QApplication::applicationName())
+                                   .arg(QApplication::applicationVersion()));
+
   // Settings
   m_Settings = new Settings(this);
 
