@@ -7,6 +7,7 @@
 // Qt includes -----------------------------
 #include <QMainWindow>
 #include <QSystemTrayIcon>
+#include <QMap>
 
 // Forward declarations --------------------
 namespace Ui { class MainWindow; }

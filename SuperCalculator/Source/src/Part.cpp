@@ -6,12 +6,10 @@
 #include "Material.h"
 
 // Qt includes -----------------------------
-#include <QLineEdit>
-#include <QDoubleSpinBox>
-#include <QComboBox>
 
 Part::Part(QObject *parent) :
   QObject(parent),
+  m_Position     (),
   m_Name         (),
   m_Count        (),
   m_Width_mm     (),
@@ -19,65 +17,15 @@ Part::Part(QObject *parent) :
   m_Thickness_mm (),
   m_CutLenght_m  (),
   m_Material     (NULL),
-  m_QLineEdit_Name           (NULL),
-  m_QDoubleSpinBox_Width     (NULL),
-  m_QDoubleSpinBox_Height    (NULL),
-  m_QDoubleSpinBox_Thick     (NULL),
-  m_QDoubleSpinBox_CutLenght (NULL),
-  m_QComboBox_Material       (NULL),
-  m_QTreeWidgetItem (NULL)
+  m_Surface_m2       (0.0),
+  m_Volume_m3        (0.0),
+  m_MaterialPrice    (0.0),
+  m_MaterialPriceTot (0.0),
+  m_CutPrice         (0.0),
+  m_CutPriceTot      (0.0),
+  m_Price            (0.0),
+  m_PriceTot         (0.0)
 {
-
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-void Part::setupTreeWidgetItem(QTreeWidgetItem *qTreeWidgetItem)
-{
-  m_QTreeWidgetItem = qTreeWidgetItem;
-
-  if(m_QTreeWidgetItem == NULL)
-    return;
-
-  m_QLineEdit_Name = new QLineEdit();
-  m_QTreeWidgetItem->treeWidget()->setItemWidget(m_QTreeWidgetItem,
-                                                 0,
-                                                 m_QLineEdit_Name);
-  m_QLineEdit_Name->setText(m_Name);
-
-  m_QDoubleSpinBox_Width = new QDoubleSpinBox();
-  m_QTreeWidgetItem->treeWidget()->setItemWidget(m_QTreeWidgetItem,
-                                                 1,
-                                                 m_QDoubleSpinBox_Width);
-  m_QDoubleSpinBox_Width->setValue(m_Width_mm);
-
-  m_QDoubleSpinBox_Height = new QDoubleSpinBox();
-  m_QTreeWidgetItem->treeWidget()->setItemWidget(m_QTreeWidgetItem,
-                                                 2,
-                                                 m_QDoubleSpinBox_Height);
-  m_QDoubleSpinBox_Height->setValue(m_Height_mm);
-
-  m_QDoubleSpinBox_Thick = new QDoubleSpinBox();
-  m_QTreeWidgetItem->treeWidget()->setItemWidget(m_QTreeWidgetItem,
-                                                 3,
-                                                 m_QDoubleSpinBox_Thick);
-  m_QDoubleSpinBox_Thick->setValue(m_Thickness_mm);
-
-  m_QDoubleSpinBox_CutLenght = new QDoubleSpinBox();
-  m_QTreeWidgetItem->treeWidget()->setItemWidget(m_QTreeWidgetItem,
-                                                 4,
-                                                 m_QDoubleSpinBox_CutLenght);
-  m_QDoubleSpinBox_CutLenght->setValue(m_CutLenght_m);
-
-
-//  m_QTreeWidgetItem->setText(5, m_Material);
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-QTreeWidgetItem *Part::getTreeWidgetItem() const
-{
-    return m_QTreeWidgetItem;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -147,11 +95,13 @@ void Part::calculate()
   m_Surface_m2 = (m_Width_mm/1000.0) * (m_Height_mm/1000.0);
   m_Volume_m3 = m_Surface_m2 * m_Thickness_mm/1000.0;
 
-  m_SurfacePrice = m_Surface_m2 * m_Material->getSurfaceValue(m_Thickness_mm);
+  m_MaterialPrice = m_Surface_m2 * m_Material->getSurfaceValue(m_Thickness_mm);
+  m_MaterialPriceTot = m_MaterialPrice * m_Count;
 
   m_CutPrice = m_CutLenght_m * m_Material->getCutValue(m_Thickness_mm);
-  m_CutPriceTot = m_CutPrice * m_Count + m_SurfacePrice * m_Count;
+  m_CutPriceTot = m_CutPrice * m_Count;
 
-  m_Price = m_CutPriceTot;
+  m_Price = m_MaterialPrice + m_CutPrice;
+  m_PriceTot = m_Price * m_Count;
 }
 

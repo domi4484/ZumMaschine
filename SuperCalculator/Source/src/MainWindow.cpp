@@ -40,10 +40,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
   // Load materials
   loadMaterials();
-
-  QTreeWidgetItem *qTreeWidgetItem = new QTreeWidgetItem();
-  m_Ui->m_QTreeWidget->addTopLevelItem(qTreeWidgetItem);
-  part->setupTreeWidgetItem(qTreeWidgetItem);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -151,7 +147,12 @@ void MainWindow::loadMaterials()
 
 void MainWindow::updatePart()
 {
-  m_Ui->m_QLabel_Total->setText(QString::number(m_CurrentPart->getPrice()));
+  m_Ui->m_QLabel_MaterialKostenEinzeln ->setText(QString::number(m_CurrentPart->getMaterialPrice()));
+  m_Ui->m_QLabel_MaterialKosten        ->setText(QString::number(m_CurrentPart->getMaterialPriceTot()));
+  m_Ui->m_QLabel_SchneidKostenEinzeln  ->setText(QString::number(m_CurrentPart->getCutPrice()));
+  m_Ui->m_QLabel_SchneidKosten         ->setText(QString::number(m_CurrentPart->getCutPriceTot()));
+  m_Ui->m_QLabel_TotalEinzeln          ->setText(QString::number(m_CurrentPart->getPrice()));
+  m_Ui->m_QLabel_Total                 ->setText(QString::number(m_CurrentPart->getPriceTot()));
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

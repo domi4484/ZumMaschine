@@ -3,12 +3,9 @@
 
 // Qt includes -----------------------------
 #include <QObject>
-#include <QTreeWidgetItem>
 
 // Forward declarations --------------------
 class Material;
-class QDoubleSpinBox;
-class QComboBox;
 
 class Part : public QObject
 {
@@ -16,9 +13,6 @@ class Part : public QObject
 public:
 
   explicit Part(QObject *parent = 0);
-
-  void setupTreeWidgetItem(QTreeWidgetItem *qTreeWidgetItem);
-  QTreeWidgetItem *getTreeWidgetItem() const;
 
   void setName(const QString &name);
   void setCount(int count);
@@ -44,7 +38,8 @@ public:
   double getCutPrice()         const { return m_CutPrice;         }
   double getCutPriceTot()      const { return m_CutPriceTot;      }
 
-  double getPrice() const { return m_Price; }
+  double getPrice()    const { return m_Price;    }
+  double getPriceTot() const { return m_PriceTot; }
 
 signals:
 
@@ -54,6 +49,7 @@ public slots:
 
 private:
 
+  int       m_Position;
   QString   m_Name;
   int       m_Count;
   double    m_Width_mm;
@@ -66,21 +62,11 @@ private:
   double m_Volume_m3;
   double m_MaterialPrice;
   double m_MaterialPriceTot;
-  double m_SurfacePrice;
   double m_CutPrice;
   double m_CutPriceTot;
 
   double m_Price;
-
-  QLineEdit      *m_QLineEdit_Name;
-  QDoubleSpinBox *m_QDoubleSpinBox_Width;
-  QDoubleSpinBox *m_QDoubleSpinBox_Height;
-  QDoubleSpinBox *m_QDoubleSpinBox_Thick;
-  QDoubleSpinBox *m_QDoubleSpinBox_CutLenght;
-  QComboBox      *m_QComboBox_Material;
-
-  // Link to QTreeWidgetItem
-  QTreeWidgetItem *m_QTreeWidgetItem;
+  double m_PriceTot;
 
   void calculate();
 };

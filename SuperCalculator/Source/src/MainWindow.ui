@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>634</width>
-    <height>335</height>
+    <width>685</width>
+    <height>394</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -49,13 +49,16 @@
     <item row="1" column="2">
      <widget class="QDoubleSpinBox" name="m_QDoubleSpinBox_Width">
       <property name="decimals">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="minimum">
        <double>1.000000000000000</double>
       </property>
       <property name="maximum">
        <double>10000.000000000000000</double>
+      </property>
+      <property name="value">
+       <double>10.000000000000000</double>
       </property>
      </widget>
     </item>
@@ -69,7 +72,7 @@
     <item row="1" column="3">
      <widget class="QDoubleSpinBox" name="m_QDoubleSpinBox_Height">
       <property name="decimals">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="minimum">
        <double>1.000000000000000</double>
@@ -77,10 +80,18 @@
       <property name="maximum">
        <double>10000.000000000000000</double>
       </property>
+      <property name="value">
+       <double>10.000000000000000</double>
+      </property>
      </widget>
     </item>
     <item row="3" column="0" colspan="7">
      <widget class="QTreeWidget" name="m_QTreeWidget">
+      <column>
+       <property name="text">
+        <string>Pos</string>
+       </property>
+      </column>
       <column>
        <property name="text">
         <string>Name</string>
@@ -143,26 +154,114 @@
     <item row="1" column="1">
      <widget class="QSpinBox" name="m_QSpinBox_Pieces"/>
     </item>
-    <item row="2" column="4" colspan="3">
+    <item row="1" column="4">
+     <widget class="QComboBox" name="m_QComboBox_Thickness"/>
+    </item>
+    <item row="2" column="3" colspan="4">
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="1">
-       <widget class="QLabel" name="m_QLabel_Total">
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_10">
+        <property name="text">
+         <string>Tot mat. kosten:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QLabel" name="m_QLabel_MaterialKosten">
         <property name="text">
          <string>0.0</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="0">
+      <item row="2" column="2">
+       <widget class="QLabel" name="m_QLabel_SchneidKosten">
+        <property name="text">
+         <string>0.0</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="2">
+       <widget class="QLabel" name="m_QLabel_Total">
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>0.0</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
        <widget class="QLabel" name="label_9">
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="text">
          <string>Tot:</string>
         </property>
        </widget>
       </item>
+      <item row="3" column="0" colspan="3">
+       <widget class="Line" name="line">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_8">
+        <property name="text">
+         <string>Tot schneidkosten:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLabel" name="m_QLabel_SchneidKostenEinzeln">
+        <property name="text">
+         <string>0.0</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLabel" name="m_QLabel_TotalEinzeln">
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>0.0</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLabel" name="m_QLabel_MaterialKostenEinzeln">
+        <property name="text">
+         <string>0.0</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="label_16">
+        <property name="text">
+         <string>Einzeln</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="label_17">
+        <property name="text">
+         <string>Alle</string>
+        </property>
+       </widget>
+      </item>
      </layout>
-    </item>
-    <item row="1" column="4">
-     <widget class="QComboBox" name="m_QComboBox_Thickness"/>
     </item>
    </layout>
   </widget>
@@ -171,13 +270,13 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>634</width>
-     <height>25</height>
+     <width>685</width>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string>Fi&amp;le</string>
     </property>
     <addaction name="m_QAction_File_Settings"/>
     <addaction name="separator"/>
@@ -197,6 +296,16 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>lineEdit</tabstop>
+  <tabstop>m_QSpinBox_Pieces</tabstop>
+  <tabstop>m_QDoubleSpinBox_Width</tabstop>
+  <tabstop>m_QDoubleSpinBox_Height</tabstop>
+  <tabstop>m_QComboBox_Thickness</tabstop>
+  <tabstop>m_QDoubleSpinBox_CutLength</tabstop>
+  <tabstop>m_QComboBox_Material</tabstop>
+  <tabstop>m_QTreeWidget</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
