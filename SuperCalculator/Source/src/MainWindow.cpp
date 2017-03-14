@@ -30,6 +30,16 @@ MainWindow::MainWindow(QWidget *parent) :
   setWindowTitle(QString("%1 - %2").arg(QApplication::applicationName())
                                    .arg(QApplication::applicationVersion()));
 
+  m_Ui->m_QTreeWidget->setColumnWidth(Column_Position,   30);
+  m_Ui->m_QTreeWidget->setColumnWidth(Column_Quantity,   30);
+  m_Ui->m_QTreeWidget->setColumnWidth(Column_Name,       150);
+  m_Ui->m_QTreeWidget->setColumnWidth(Column_Size,       60);
+  m_Ui->m_QTreeWidget->setColumnWidth(Column_Thickness,  50);
+  m_Ui->m_QTreeWidget->setColumnWidth(Column_CutLength,  60);
+  m_Ui->m_QTreeWidget->setColumnWidth(Column_Material,   100);
+  m_Ui->m_QTreeWidget->setColumnWidth(Column_Price,      50);
+  m_Ui->m_QTreeWidget->setColumnWidth(Column_PriceTotal, 50);
+
   // Settings
   m_Settings = new Settings(this);
 
@@ -40,6 +50,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
   // Load materials
   loadMaterials();
+
+  // Update parts
+  updatePart();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -153,6 +166,14 @@ void MainWindow::updatePart()
   m_Ui->m_QLabel_SchneidKosten         ->setText(QString::number(m_CurrentPart->getCutPriceTot()));
   m_Ui->m_QLabel_TotalEinzeln          ->setText(QString::number(m_CurrentPart->getPrice()));
   m_Ui->m_QLabel_Total                 ->setText(QString::number(m_CurrentPart->getPriceTot()));
+
+  updatePartsList();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void MainWindow::updatePartsList()
+{
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

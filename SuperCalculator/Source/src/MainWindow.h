@@ -22,6 +22,19 @@ class MainWindow : public QMainWindow
     
 public:
 
+  enum Enum_TreeWidget_Columns
+  {
+    Column_Position,
+    Column_Quantity,
+    Column_Name,
+    Column_Size,
+    Column_Thickness,
+    Column_CutLength,
+    Column_Material,
+    Column_Price,
+    Column_PriceTotal
+  };
+
   explicit MainWindow(QWidget *parent = 0);
   ~MainWindow();
     
@@ -51,6 +64,8 @@ private:
 
   void loadMaterials();
   void updatePart();
+
+  void updatePartsList();
 };
 
 #endif // MAINWINDOW_H

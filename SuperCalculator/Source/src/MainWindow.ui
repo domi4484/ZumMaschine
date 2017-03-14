@@ -89,7 +89,12 @@
      <widget class="QTreeWidget" name="m_QTreeWidget">
       <column>
        <property name="text">
-        <string>Pos</string>
+        <string>Pos.</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Stk.</string>
        </property>
       </column>
       <column>
@@ -99,12 +104,7 @@
       </column>
       <column>
        <property name="text">
-        <string>Breite</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Höhe</string>
+        <string>Grösse</string>
        </property>
       </column>
       <column>
@@ -120,6 +120,16 @@
       <column>
        <property name="text">
         <string>Werkstoff</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Preis</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Preis Tot</string>
        </property>
       </column>
      </widget>
