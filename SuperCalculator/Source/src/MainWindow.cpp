@@ -15,6 +15,7 @@
 #include <QFileSystemModel>
 #include <QFileSystemWatcher>
 #include <QMessageBox>
+#include <QTreeWidgetItem>
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
@@ -174,6 +175,24 @@ void MainWindow::updatePart()
 
 void MainWindow::updatePartsList()
 {
+  m_Ui->m_QTreeWidget->clear();
+
+  for (int i=0; i<m_QList_Parts.size(); i++)
+  {
+    QTreeWidgetItem *qTreeWidgetItem = new QTreeWidgetItem(m_Ui->m_QTreeWidget);
+    qTreeWidgetItem->setText(Column_Position,   QString::number(i));
+    qTreeWidgetItem->setText(Column_Quantity,   QString::number(m_QList_Parts.at(i)->getCount()));
+    qTreeWidgetItem->setText(Column_Name,       m_QList_Parts.at(i)->getName());
+    qTreeWidgetItem->setText(Column_Size,       QString("%1x%2").arg(m_QList_Parts.at(i)->getWidth_mm())
+                                                                .arg(m_QList_Parts.at(i)->getHeight_mm()));
+    qTreeWidgetItem->setText(Column_Thickness,  QString::number(m_QList_Parts.at(i)->getThickness_mm()));
+    qTreeWidgetItem->setText(Column_CutLength,  QString::number(m_QList_Parts.at(i)->getCutLenght_m()));
+    qTreeWidgetItem->setText(Column_Material,   m_QList_Parts.at(i)->getMaterial()->getName());
+    qTreeWidgetItem->setText(Column_Price,      QString::number(m_QList_Parts.at(i)->getPrice()));
+    qTreeWidgetItem->setText(Column_PriceTotal, QString::number(m_QList_Parts.at(i)->getPriceTot()));
+
+    m_Ui->m_QTreeWidget->addTopLevelItem(qTreeWidgetItem);
+  }
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
