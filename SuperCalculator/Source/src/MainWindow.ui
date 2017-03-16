@@ -6,168 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>685</width>
-    <height>394</height>
+    <width>919</width>
+    <height>601</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Drawings Mirror</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>Name</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLineEdit" name="lineEdit"/>
-    </item>
-    <item row="0" column="2">
-     <widget class="QLabel" name="label_2">
-      <property name="text">
-       <string>Breite</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="3">
-     <widget class="QLabel" name="label_3">
-      <property name="text">
-       <string>Höhe</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="5">
-     <widget class="QLabel" name="label_5">
-      <property name="text">
-       <string>Schneidlänge</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="2">
-     <widget class="QDoubleSpinBox" name="m_QDoubleSpinBox_Width">
-      <property name="decimals">
-       <number>0</number>
-      </property>
-      <property name="minimum">
-       <double>1.000000000000000</double>
-      </property>
-      <property name="maximum">
-       <double>10000.000000000000000</double>
-      </property>
-      <property name="value">
-       <double>10.000000000000000</double>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="4">
-     <widget class="QLabel" name="label_4">
-      <property name="text">
-       <string>Dicke</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="3">
-     <widget class="QDoubleSpinBox" name="m_QDoubleSpinBox_Height">
-      <property name="decimals">
-       <number>0</number>
-      </property>
-      <property name="minimum">
-       <double>1.000000000000000</double>
-      </property>
-      <property name="maximum">
-       <double>10000.000000000000000</double>
-      </property>
-      <property name="value">
-       <double>10.000000000000000</double>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="0" colspan="7">
-     <widget class="QTreeWidget" name="m_QTreeWidget">
-      <column>
-       <property name="text">
-        <string>Pos.</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Stk.</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Name</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Grösse</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Dicke</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Schneidlänge</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Werkstoff</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Preis</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Preis Tot</string>
-       </property>
-      </column>
-     </widget>
-    </item>
-    <item row="1" column="6">
-     <widget class="QComboBox" name="m_QComboBox_Material"/>
-    </item>
-    <item row="0" column="6">
-     <widget class="QLabel" name="label_6">
-      <property name="text">
-       <string>Werkstoff</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QLabel" name="label_7">
-      <property name="text">
-       <string>Stk</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="5">
-     <widget class="QDoubleSpinBox" name="m_QDoubleSpinBox_CutLength">
-      <property name="minimum">
-       <double>0.010000000000000</double>
-      </property>
-      <property name="maximum">
-       <double>900000.000000000000000</double>
-      </property>
-     </widget>
-    </item>
+   <layout class="QGridLayout" name="gridLayout" columnstretch="0,0,0,0,0,0,0,0,0,2">
     <item row="1" column="1">
-     <widget class="QSpinBox" name="m_QSpinBox_Pieces"/>
-    </item>
-    <item row="1" column="4">
-     <widget class="QComboBox" name="m_QComboBox_Thickness"/>
-    </item>
-    <item row="2" column="3" colspan="4">
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="1" column="0">
        <widget class="QLabel" name="label_10">
@@ -273,6 +121,233 @@
       </item>
      </layout>
     </item>
+    <item row="2" column="1">
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="0" column="9" rowspan="3">
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="1" column="2">
+       <widget class="QLabel" name="label_12">
+        <property name="text">
+         <string>0.0</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLabel" name="label_11">
+        <property name="text">
+         <string>Tot:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="0" colspan="3">
+       <widget class="QTreeWidget" name="m_QTreeWidget">
+        <column>
+         <property name="text">
+          <string>Pos.</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Stk.</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Name</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Grösse</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Dicke</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Schneidlänge</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Werkstoff</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Preis</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Preis Tot</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="0">
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="0" column="0" colspan="2">
+     <layout class="QGridLayout" name="gridLayout_4">
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="lineEdit"/>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Höhe</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QComboBox" name="m_QComboBox_Material"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_14">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QSpinBox" name="m_QSpinBox_Pieces"/>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Name</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="3">
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>Schneidlänge</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Dicke</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_13">
+        <property name="text">
+         <string>Pos.</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Breite</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>Werkstoff</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QLabel" name="label_7">
+        <property name="text">
+         <string>Stk</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QDoubleSpinBox" name="m_QDoubleSpinBox_Width">
+        <property name="decimals">
+         <number>0</number>
+        </property>
+        <property name="minimum">
+         <double>1.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>10000.000000000000000</double>
+        </property>
+        <property name="value">
+         <double>10.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QDoubleSpinBox" name="m_QDoubleSpinBox_Height">
+        <property name="decimals">
+         <number>0</number>
+        </property>
+        <property name="minimum">
+         <double>1.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>10000.000000000000000</double>
+        </property>
+        <property name="value">
+         <double>10.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
+       <widget class="QComboBox" name="m_QComboBox_Thickness"/>
+      </item>
+      <item row="3" column="3">
+       <widget class="QDoubleSpinBox" name="m_QDoubleSpinBox_CutLength">
+        <property name="minimum">
+         <double>0.010000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>900000.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -280,8 +355,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>685</width>
-     <height>19</height>
+     <width>919</width>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -306,16 +381,6 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <tabstops>
-  <tabstop>lineEdit</tabstop>
-  <tabstop>m_QSpinBox_Pieces</tabstop>
-  <tabstop>m_QDoubleSpinBox_Width</tabstop>
-  <tabstop>m_QDoubleSpinBox_Height</tabstop>
-  <tabstop>m_QComboBox_Thickness</tabstop>
-  <tabstop>m_QDoubleSpinBox_CutLength</tabstop>
-  <tabstop>m_QComboBox_Material</tabstop>
-  <tabstop>m_QTreeWidget</tabstop>
- </tabstops>
  <resources/>
  <connections/>
 </ui>
