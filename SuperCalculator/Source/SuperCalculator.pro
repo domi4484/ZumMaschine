@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project SuperCalculator
+# Project OffertenRechner
 #
 # (C) 2016 Damiano Lombardi
 #

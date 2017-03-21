@@ -20,15 +20,19 @@ public:
   void setHeight_mm(double height_mm);
   void setThickness_mm(double thickness_mm);
   void setCutLenght_m(double cutLength_m);
+  void setMaterialIncluded(bool included);
   void setMaterial(Material *material);
 
-  QString   getName()         const { return m_Name;         }
-  int       getCount()        const { return m_Count;        }
-  double    getWidth_mm()     const { return m_Width_mm;     }
-  double    getHeight_mm()    const { return m_Height_mm;    }
-  double    getThickness_mm() const { return m_Thickness_mm; }
-  double    getCutLenght_m()  const { return m_CutLenght_m;  }
-  Material *getMaterial()     const { return m_Material;     }
+  QString   getName()             const { return m_Name;             }
+  int       getCount()            const { return m_Count;            }
+  double    getWidth_mm()         const { return m_Width_mm;         }
+  double    getHeight_mm()        const { return m_Height_mm;        }
+  double    getThickness_mm()     const { return m_Thickness_mm;     }
+  double    getCutLenght_m()      const { return m_CutLenght_m;      }
+  bool      getMaterialIncluded() const { return m_MaterialIncluded; }
+  Material *getMaterial()         const { return m_Material;         }
+  double    getMaterialSurfaceValue() const;
+  double    getMaterialCutValue()     const;
 
   double getSurface_m2()       const { return m_Surface_m2;       }
   double getVolume_m3()        const { return m_Volume_m3;        }
@@ -56,6 +60,7 @@ private:
   double    m_Height_mm;
   double    m_Thickness_mm;
   double    m_CutLenght_m;
+  bool      m_MaterialIncluded;
   Material *m_Material;
 
   double m_Surface_m2;

@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project DrawingsMirror
+# Project OffertenRechner
 #
 # (C) 2016 Damiano Lombardi
 #
@@ -8,7 +8,7 @@
 
 TEMPLATE  = app
 
-TARGET    = DrawingsMirror
+TARGET    = OffertenRechner
 
 QT       += core gui widgets
 
@@ -54,5 +54,6 @@ RESOURCES += \
     Resources/Resources.qrc
 
 DISTFILES += \
-    ../bin/Werkstoffen/Stahl.material.json
+    ../bin/Werkstoffen/Stahl.material.json \
+    ../bin/Werkstoffen/Alu.material.json
 

@@ -9,14 +9,15 @@
 
 Part::Part(QObject *parent) :
   QObject(parent),
-  m_Position     (),
-  m_Name         (),
-  m_Count        (),
-  m_Width_mm     (),
-  m_Height_mm    (),
-  m_Thickness_mm (),
-  m_CutLenght_m  (),
-  m_Material     (NULL),
+  m_Position         (),
+  m_Name             (),
+  m_Count            (),
+  m_Width_mm         (),
+  m_Height_mm        (),
+  m_Thickness_mm     (),
+  m_CutLenght_m      (),
+  m_MaterialIncluded (true),
+  m_Material         (NULL),
   m_Surface_m2       (0.0),
   m_Volume_m3        (0.0),
   m_MaterialPrice    (0.0),
@@ -26,6 +27,7 @@ Part::Part(QObject *parent) :
   m_Price            (0.0),
   m_PriceTot         (0.0)
 {
+  calculate();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -79,10 +81,32 @@ void Part::setCutLenght_m(double cutLength_m)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+void Part::setMaterialIncluded(bool included)
+{
+  m_MaterialIncluded = included;
+  calculate();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 void Part::setMaterial(Material *material)
 {
   m_Material = material;
   calculate();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+double Part::getMaterialSurfaceValue() const
+{
+  return m_Material->getSurfaceValue(m_Thickness_mm);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+double Part::getMaterialCutValue() const
+{
+  return m_Material->getCutValue(m_Thickness_mm);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -95,7 +119,7 @@ void Part::calculate()
   m_Surface_m2 = (m_Width_mm/1000.0) * (m_Height_mm/1000.0);
   m_Volume_m3 = m_Surface_m2 * m_Thickness_mm/1000.0;
 
-  m_MaterialPrice = m_Surface_m2 * m_Material->getSurfaceValue(m_Thickness_mm);
+  m_MaterialPrice = m_Surface_m2 * m_Material->getSurfaceValue(m_Thickness_mm) * m_MaterialIncluded;
   m_MaterialPriceTot = m_MaterialPrice * m_Count;
 
   m_CutPrice = m_CutLenght_m * m_Material->getCutValue(m_Thickness_mm);
@@ -103,5 +127,7 @@ void Part::calculate()
 
   m_Price = m_MaterialPrice + m_CutPrice;
   m_PriceTot = m_Price * m_Count;
+
+  emit changed();
 }
 

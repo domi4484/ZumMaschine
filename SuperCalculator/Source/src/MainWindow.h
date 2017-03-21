@@ -40,6 +40,8 @@ public:
     
 private slots:
 
+  void slot_Part_Changed();
+
   void on_m_QAction_File_Settings_triggered();
   void on_m_QAction_File_Exit_triggered();
 
@@ -63,7 +65,6 @@ private:
   QList<Part *> m_QList_Parts;
 
   void loadMaterials();
-  void updatePart();
 
   void updatePartsList();
 };

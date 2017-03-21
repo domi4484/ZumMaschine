@@ -49,11 +49,12 @@ MainWindow::MainWindow(QWidget *parent) :
   m_QList_Parts.append(part);
   m_CurrentPart = part;
 
+  connect(part,
+          SIGNAL(changed()),
+          SLOT(slot_Part_Changed()));
+
   // Load materials
   loadMaterials();
-
-  // Update parts
-  updatePart();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -66,6 +67,31 @@ MainWindow::~MainWindow()
   }
 
   delete m_Ui;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void MainWindow::slot_Part_Changed()
+{
+  m_Ui->m_QLineEdit_Name                         ->setText(m_CurrentPart->getName());
+  m_Ui->m_QSpinBox_Pieces                        ->setValue(m_CurrentPart->getCount());
+  m_Ui->m_QDoubleSpinBox_Width                   ->setValue(m_CurrentPart->getWidth_mm());
+  m_Ui->m_QDoubleSpinBox_Height                  ->setValue(m_CurrentPart->getHeight_mm());
+  m_Ui->m_QDoubleSpinBox_CutLength               ->setValue(m_CurrentPart->getCutLenght_m());
+  m_Ui->m_QCheckBox_MaterialIncluded             ->setChecked(m_CurrentPart->getMaterialIncluded());
+  m_Ui->m_QComboBox_Material                     ->setCurrentText(m_CurrentPart->getMaterial()->getName());
+  m_Ui->m_QComboBox_Thickness                    ->setCurrentText(QString::number(m_CurrentPart->getThickness_mm()));
+  m_Ui->m_QSpinBox_MaterialKostenProQuadratMeter ->setValue(m_CurrentPart->getMaterialSurfaceValue());
+  m_Ui->m_QSpinBox_SchneidkostenProMeter         ->setValue(m_CurrentPart->getMaterialCutValue());
+
+  m_Ui->m_QLabel_MaterialKostenEinzeln ->setText(QString::number(m_CurrentPart->getMaterialPrice()));
+  m_Ui->m_QLabel_MaterialKosten        ->setText(QString::number(m_CurrentPart->getMaterialPriceTot()));
+  m_Ui->m_QLabel_SchneidKostenEinzeln  ->setText(QString::number(m_CurrentPart->getCutPrice()));
+  m_Ui->m_QLabel_SchneidKosten         ->setText(QString::number(m_CurrentPart->getCutPriceTot()));
+  m_Ui->m_QLabel_TotalEinzeln          ->setText(QString::number(m_CurrentPart->getPrice()));
+  m_Ui->m_QLabel_Total                 ->setText(QString::number(m_CurrentPart->getPriceTot()));
+
+  updatePartsList();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -90,7 +116,6 @@ void MainWindow::on_m_QAction_File_Exit_triggered()
 void MainWindow::on_m_QSpinBox_Pieces_valueChanged(int arg1)
 {
   m_CurrentPart->setCount(arg1);
-  updatePart();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -98,7 +123,6 @@ void MainWindow::on_m_QSpinBox_Pieces_valueChanged(int arg1)
 void MainWindow::on_m_QDoubleSpinBox_Width_valueChanged(double arg1)
 {
   m_CurrentPart->setWidth_mm(arg1);
-  updatePart();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -106,7 +130,6 @@ void MainWindow::on_m_QDoubleSpinBox_Width_valueChanged(double arg1)
 void MainWindow::on_m_QDoubleSpinBox_Height_valueChanged(double arg1)
 {
   m_CurrentPart->setHeight_mm(arg1);
-  updatePart();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -114,7 +137,6 @@ void MainWindow::on_m_QDoubleSpinBox_Height_valueChanged(double arg1)
 void MainWindow::on_m_QDoubleSpinBox_CutLength_valueChanged(double arg1)
 {
   m_CurrentPart->setCutLenght_m(arg1);
-  updatePart();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -159,24 +181,11 @@ void MainWindow::loadMaterials()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void MainWindow::updatePart()
-{
-  m_Ui->m_QLabel_MaterialKostenEinzeln ->setText(QString::number(m_CurrentPart->getMaterialPrice()));
-  m_Ui->m_QLabel_MaterialKosten        ->setText(QString::number(m_CurrentPart->getMaterialPriceTot()));
-  m_Ui->m_QLabel_SchneidKostenEinzeln  ->setText(QString::number(m_CurrentPart->getCutPrice()));
-  m_Ui->m_QLabel_SchneidKosten         ->setText(QString::number(m_CurrentPart->getCutPriceTot()));
-  m_Ui->m_QLabel_TotalEinzeln          ->setText(QString::number(m_CurrentPart->getPrice()));
-  m_Ui->m_QLabel_Total                 ->setText(QString::number(m_CurrentPart->getPriceTot()));
-
-  updatePartsList();
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
 void MainWindow::updatePartsList()
 {
   m_Ui->m_QTreeWidget->clear();
 
+  double total = 0.0;
   for (int i=0; i<m_QList_Parts.size(); i++)
   {
     QTreeWidgetItem *qTreeWidgetItem = new QTreeWidgetItem(m_Ui->m_QTreeWidget);
@@ -192,7 +201,10 @@ void MainWindow::updatePartsList()
     qTreeWidgetItem->setText(Column_PriceTotal, QString::number(m_QList_Parts.at(i)->getPriceTot()));
 
     m_Ui->m_QTreeWidget->addTopLevelItem(qTreeWidgetItem);
+
+    total += m_QList_Parts.at(i)->getPriceTot();
   }
+  m_Ui->m_QLabel_ListTotal->setText(QString::number(total));
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -203,15 +215,12 @@ void MainWindow::on_m_QComboBox_Thickness_currentIndexChanged(const QString &val
     return;
 
   m_CurrentPart->setThickness_mm(value.toDouble());
-  updatePart();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 void MainWindow::on_m_QComboBox_Material_currentIndexChanged(const QString &value)
 {
-  qDebug() << "on_m_QComboBox_Material_currentIndexChanged";
-
   Material *material = m_QMap_Materials.value(value);
   m_CurrentPart->setMaterial(material);
 
