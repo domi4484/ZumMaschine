@@ -54,6 +54,7 @@ RESOURCES += \
     Resources/Resources.qrc
 
 DISTFILES += \
-    ../bin/Werkstoffen/Stahl.material.json \
-    ../bin/Werkstoffen/Alu.material.json
+    ../../Release/Werkstoffen/Stahl.material.json \
+    ../../Release/Werkstoffen/Alu.material.json \
+    ../../Release/Werkstoffen/Edelstahl.material.json
 

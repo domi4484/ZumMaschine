@@ -28,12 +28,8 @@ public:
 public slots:
 
   // Application settings
-  QString get_Mirror_DirectorySource();
-  void    set_Mirror_DirectorySource(const QString &directorySource);
-  QString get_Mirror_DirectoryDestination();
-  void    set_Mirror_DirectoryDestination(const QString &directoryDestination);
-  bool    get_Mirror_Active();
-  void    set_Mirror_Active(bool active);
+  QString get_MaterialsDirectory();
+  void    set_MaterialsDirectory(const QString &directory);
 };
 
 #endif // SETTINGS_H

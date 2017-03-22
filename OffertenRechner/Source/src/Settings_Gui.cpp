@@ -19,9 +19,7 @@ Settings_Gui::Settings_Gui(Settings *settings,
 {
   m_Ui->setupUi(this);
 
-  m_Ui->m_QLineEdit_Mirror_Source->setText(m_Settings->get_Mirror_DirectorySource());
-  m_Ui->m_QLineEdit_Mirror_Destination->setText(m_Settings->get_Mirror_DirectoryDestination());
-  m_Ui->m_QCheckBox_MirrorActive->setChecked(m_Settings->get_Mirror_Active());
+  m_Ui->m_QLineEdit_MaterialsDirectory->setText(m_Settings->get_MaterialsDirectory());
 
   // Signals/slots
   connect(this,
@@ -40,33 +38,18 @@ Settings_Gui::~Settings_Gui()
 
 void Settings_Gui::slot_Dialog_accepted()
 {
-  m_Settings->set_Mirror_DirectorySource(m_Ui->m_QLineEdit_Mirror_Source->text());
-  m_Settings->set_Mirror_DirectoryDestination(m_Ui->m_QLineEdit_Mirror_Destination->text());
-  m_Settings->set_Mirror_Active(m_Ui->m_QCheckBox_MirrorActive->isChecked());
+  m_Settings->set_MaterialsDirectory(m_Ui->m_QLineEdit_MaterialsDirectory->text());
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void Settings_Gui::on_m_QToolButton_Mirror_Source_clicked()
+void Settings_Gui::on_m_QToolButton_MaterialsDirectory_clicked()
 {
-  QString sourceDirectory = QFileDialog::getExistingDirectory(this,
-                                                              tr("Select source directory for mirroring"));
+  QString materialsDirectory = QFileDialog::getExistingDirectory(this,
+                                                                 tr("Select materials directory"));
 
-  if(sourceDirectory.isEmpty())
+  if(materialsDirectory.isEmpty())
     return;
 
-  m_Ui->m_QLineEdit_Mirror_Source->setText(sourceDirectory);
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-void Settings_Gui::on_m_QToolButton_Mirror_Destination_clicked()
-{
-  QString destinationDirectory = QFileDialog::getExistingDirectory(this,
-                                                                   tr("Select destination directory for mirroring"));
-
-  if(destinationDirectory.isEmpty())
-    return;
-
-  m_Ui->m_QLineEdit_Mirror_Destination->setText(destinationDirectory);
+  m_Ui->m_QLineEdit_MaterialsDirectory->setText(materialsDirectory);
 }

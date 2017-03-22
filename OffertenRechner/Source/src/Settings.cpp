@@ -28,50 +28,18 @@ Settings::~Settings()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-QString Settings::get_Mirror_DirectorySource()
+QString Settings::get_MaterialsDirectory()
 {
-  return QSettings::value("Mirror_DirectorySource",
+  return QSettings::value("MaterialsDirectory",
                           "").toString();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void Settings::set_Mirror_DirectorySource(const QString &directorySource)
+void Settings::set_MaterialsDirectory(const QString &directory)
 {
-  QSettings::setValue("Mirror_DirectorySource",
-                      directorySource);
+  QSettings::setValue("MaterialsDirectory",
+                      directory);
 }
 
-//-----------------------------------------------------------------------------------------------------------------------------
 
-QString Settings::get_Mirror_DirectoryDestination()
-{
-  return QSettings::value("Mirror_DirectoryDestination",
-                          "").toString();
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-void Settings::set_Mirror_DirectoryDestination(const QString &directoryDestination)
-{
-  QSettings::setValue("Mirror_DirectoryDestination",
-                      directoryDestination);
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-bool Settings::get_Mirror_Active()
-{
-  return QSettings::value("Mirror_Active",
-                          false).toBool();
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-void Settings::set_Mirror_Active(bool active)
-{
-  QSettings::setValue("Mirror_Active",
-                      active);
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------

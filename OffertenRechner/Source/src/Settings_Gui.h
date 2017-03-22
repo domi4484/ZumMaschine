@@ -21,8 +21,7 @@ private slots:
 
   void slot_Dialog_accepted();
 
-  void on_m_QToolButton_Mirror_Source_clicked();
-  void on_m_QToolButton_Mirror_Destination_clicked();
+  void on_m_QToolButton_MaterialsDirectory_clicked();
 
 private:
 

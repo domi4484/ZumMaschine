@@ -54,7 +54,7 @@ MainWindow::MainWindow(QWidget *parent) :
           SLOT(slot_Part_Changed()));
 
   // Load materials
-  loadMaterials();
+  loadMaterials(m_Settings->get_MaterialsDirectory());
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -141,10 +141,10 @@ void MainWindow::on_m_QDoubleSpinBox_CutLength_valueChanged(double arg1)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void MainWindow::loadMaterials()
+void MainWindow::loadMaterials(const QString &materialsDirectory)
 {
   // Get material files
-  QDir qDir(Material::_CONST::LOCATION);
+  QDir qDir(materialsDirectory);
   QFileInfoList qFileInfoList = qDir.entryInfoList(QStringList() << "*" + Material::_CONST::FILENAME_EXTENSION,
                                                    QDir::Files);
 

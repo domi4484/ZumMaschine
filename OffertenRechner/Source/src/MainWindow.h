@@ -64,7 +64,7 @@ private:
   Part *m_CurrentPart;
   QList<Part *> m_QList_Parts;
 
-  void loadMaterials();
+  void loadMaterials(const QString &materialsDirectory);
 
   void updatePartsList();
 };
