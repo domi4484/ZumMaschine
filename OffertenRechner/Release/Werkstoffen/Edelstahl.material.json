@@ -1,0 +1,10 @@
+{
+  "name": "Alu",
+  "values": [
+    {
+      "thickness":3,
+      "surfaceValue":150,
+      "cutValue":19
+    }
+  ]
+}
