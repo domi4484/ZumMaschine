@@ -34,21 +34,22 @@ SOURCES += main.cpp\
            MainWindow.cpp \
     Settings.cpp \
     Settings_Gui.cpp \
-    TreeWidgetItem.cpp \
     Part.cpp \
     Material.cpp \
-    Exception.cpp
+    Exception.cpp \
+    Offer_Gui.cpp
 
 HEADERS  += MainWindow.h \
     Settings.h \
     Settings_Gui.h \
-    TreeWidgetItem.h \
     Part.h \
     Material.h \
-    Exception.h
+    Exception.h \
+    Offer_Gui.h
 
 FORMS    += MainWindow.ui \
-    Settings_Gui.ui
+    Settings_Gui.ui \
+    Offer_Gui.ui
 
 RESOURCES += \
     Resources/Resources.qrc

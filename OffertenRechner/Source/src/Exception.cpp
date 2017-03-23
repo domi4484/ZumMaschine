@@ -6,6 +6,7 @@
 
 Exception::Exception(const QString &text)
   : QException()
+  , m_Text(text)
 {
 
 }
