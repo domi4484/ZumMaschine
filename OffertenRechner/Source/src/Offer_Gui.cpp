@@ -86,12 +86,12 @@ void Offer_Gui::slot_Part_Changed()
   m_Ui->m_QSpinBox_MaterialKostenProQuadratMeter ->setValue(m_CurrentPart->getMaterialSurfaceValue());
   m_Ui->m_QSpinBox_SchneidkostenProMeter         ->setValue(m_CurrentPart->getMaterialCutValue());
 
-  m_Ui->m_QLabel_MaterialKostenEinzeln ->setText(QString::number(m_CurrentPart->getMaterialPrice()));
-  m_Ui->m_QLabel_MaterialKosten        ->setText(QString::number(m_CurrentPart->getMaterialPriceTot()));
-  m_Ui->m_QLabel_SchneidKostenEinzeln  ->setText(QString::number(m_CurrentPart->getCutPrice()));
-  m_Ui->m_QLabel_SchneidKosten         ->setText(QString::number(m_CurrentPart->getCutPriceTot()));
-  m_Ui->m_QLabel_TotalEinzeln          ->setText(QString::number(m_CurrentPart->getPrice()));
-  m_Ui->m_QLabel_Total                 ->setText(QString::number(m_CurrentPart->getPriceTot()));
+  m_Ui->m_QLabel_MaterialKostenEinzeln ->setText(QString::number(m_CurrentPart->getMaterialPrice()    , 'f', 2));
+  m_Ui->m_QLabel_MaterialKosten        ->setText(QString::number(m_CurrentPart->getMaterialPriceTot() , 'f', 2));
+  m_Ui->m_QLabel_SchneidKostenEinzeln  ->setText(QString::number(m_CurrentPart->getCutPrice()         , 'f', 2));
+  m_Ui->m_QLabel_SchneidKosten         ->setText(QString::number(m_CurrentPart->getCutPriceTot()      , 'f', 2));
+  m_Ui->m_QLabel_TotalEinzeln          ->setText(QString::number(m_CurrentPart->getPrice()            , 'f', 2));
+  m_Ui->m_QLabel_Total                 ->setText(QString::number(m_CurrentPart->getPriceTot()         , 'f', 2));
 
   updatePartsList();
 }
@@ -199,8 +199,8 @@ void Offer_Gui::updatePartsList()
     qTreeWidgetItem->setText(Column_Thickness,  QString::number(m_QList_Parts.at(i)->getThickness_mm()));
     qTreeWidgetItem->setText(Column_CutLength,  QString::number(m_QList_Parts.at(i)->getCutLenght_m()));
     qTreeWidgetItem->setText(Column_Material,   m_QList_Parts.at(i)->getMaterial()->getName());
-    qTreeWidgetItem->setText(Column_Price,      QString::number(m_QList_Parts.at(i)->getPrice()));
-    qTreeWidgetItem->setText(Column_PriceTotal, QString::number(m_QList_Parts.at(i)->getPriceTot()));
+    qTreeWidgetItem->setText(Column_Price,      QString::number(m_QList_Parts.at(i)->getPrice()   , 'f', 2));
+    qTreeWidgetItem->setText(Column_PriceTotal, QString::number(m_QList_Parts.at(i)->getPriceTot(), 'f', 2));
 
     m_Ui->m_QTreeWidget->addTopLevelItem(qTreeWidgetItem);
 

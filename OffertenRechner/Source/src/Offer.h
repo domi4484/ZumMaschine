@@ -6,6 +6,7 @@
 
 // Qt includes -----------------------------
 #include <QObject>
+#include <QFileInfo>
 
 class Offer : public QObject
 {
@@ -17,10 +18,10 @@ public:
   void setName(const QString &name);
 
   QString getName() const { return m_Name; }
-  QString getFilename() const { return m_Filename; }
+  QString getFilename() const { return m_QFileInfo.fileName(); }
 
   bool modified() const { return m_Modified; }
-  void save(const QString &filename);
+  void save(const QString &filename = QString());
 
 signals:
 
@@ -28,8 +29,8 @@ signals:
 
 private:
 
-  QString m_Name;
-  QString m_Filename;
+  QString   m_Name;
+  QFileInfo m_QFileInfo;
 
   QList<Part *> m_QList_Parts;
 
