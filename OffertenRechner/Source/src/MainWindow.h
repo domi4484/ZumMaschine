@@ -11,6 +11,8 @@
 
 // Forward declarations --------------------
 namespace Ui { class MainWindow; }
+class Offer;
+class Offer_Gui;
 class Settings;
 class Material;
 class QFileSystemModel;
@@ -40,18 +42,14 @@ public:
     
 private slots:
 
-  void slot_Part_Changed();
+  void slot_Offer_Changed();
 
+  void on_m_QAction_File_New_triggered();
+  void on_m_QAction_File_Open_triggered();
+  void on_m_QAction_File_Save_triggered();
+  void on_m_QAction_File_SaveAs_triggered();
   void on_m_QAction_File_Settings_triggered();
   void on_m_QAction_File_Exit_triggered();
-
-  void on_m_QSpinBox_Pieces_valueChanged(int arg1);
-  void on_m_QDoubleSpinBox_Width_valueChanged(double arg1);
-  void on_m_QDoubleSpinBox_Height_valueChanged(double arg1);
-  void on_m_QDoubleSpinBox_CutLength_valueChanged(double arg1);
-
-  void on_m_QComboBox_Thickness_currentIndexChanged(const QString &value);
-  void on_m_QComboBox_Material_currentIndexChanged(const QString &value);
 
 private:
 
@@ -61,12 +59,13 @@ private:
 
   QMap<QString, Material *> m_QMap_Materials;
 
-  Part *m_CurrentPart;
-  QList<Part *> m_QList_Parts;
+  QMap<Offer *, Offer_Gui*> m_QMap_Offers;
 
   void loadMaterials(const QString &materialsDirectory);
+  void closeMaterials();
 
-  void updatePartsList();
+  void loadOffers();
+  void closeOffers();
 };
 
 #endif // MAINWINDOW_H

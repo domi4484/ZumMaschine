@@ -37,7 +37,8 @@ SOURCES += main.cpp\
     Part.cpp \
     Material.cpp \
     Exception.cpp \
-    Offer_Gui.cpp
+    Offer_Gui.cpp \
+    Offer.cpp
 
 HEADERS  += MainWindow.h \
     Settings.h \
@@ -45,7 +46,8 @@ HEADERS  += MainWindow.h \
     Part.h \
     Material.h \
     Exception.h \
-    Offer_Gui.h
+    Offer_Gui.h \
+    Offer.h
 
 FORMS    += MainWindow.ui \
     Settings_Gui.ui \

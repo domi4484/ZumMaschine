@@ -8,9 +8,12 @@
 #include "Material.h"
 #include "Settings.h"
 #include "Settings_Gui.h"
+#include "Offer.h"
+#include "Offer_Gui.h"
 
 // Qt includes -----------------------------
 #include <QDebug>
+#include <QFileDialog>
 #include <QTimer>
 #include <QFileSystemModel>
 #include <QFileSystemWatcher>
@@ -22,8 +25,7 @@
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
   m_Ui(new Ui::MainWindow),
-  m_CurrentPart(NULL),
-  m_QList_Parts()
+  m_QMap_Offers()
 {
   // Qt ui setup
   m_Ui->setupUi(this);
@@ -31,67 +33,96 @@ MainWindow::MainWindow(QWidget *parent) :
   setWindowTitle(QString("%1 - %2").arg(QApplication::applicationName())
                                    .arg(QApplication::applicationVersion()));
 
-  m_Ui->m_QTreeWidget->setColumnWidth(Column_Position,   30);
-  m_Ui->m_QTreeWidget->setColumnWidth(Column_Quantity,   30);
-  m_Ui->m_QTreeWidget->setColumnWidth(Column_Name,       150);
-  m_Ui->m_QTreeWidget->setColumnWidth(Column_Size,       60);
-  m_Ui->m_QTreeWidget->setColumnWidth(Column_Thickness,  50);
-  m_Ui->m_QTreeWidget->setColumnWidth(Column_CutLength,  60);
-  m_Ui->m_QTreeWidget->setColumnWidth(Column_Material,   100);
-  m_Ui->m_QTreeWidget->setColumnWidth(Column_Price,      50);
-  m_Ui->m_QTreeWidget->setColumnWidth(Column_PriceTotal, 50);
+  m_Ui->m_QTabWidget->clear();
 
   // Settings
   m_Settings = new Settings(this);
 
-  // Default Piece
-  Part *part = new Part();
-  m_QList_Parts.append(part);
-  m_CurrentPart = part;
-
-  connect(part,
-          SIGNAL(changed()),
-          SLOT(slot_Part_Changed()));
-
   // Load materials
   loadMaterials(m_Settings->get_MaterialsDirectory());
+
+  // Default Offer
+  if(m_QMap_Offers.isEmpty())
+  {
+    Offer *offer = new Offer();
+    offer->setName("New");
+    Offer_Gui *offer_Gui = new Offer_Gui(offer,
+                                         this);
+    m_QMap_Offers.insert(offer,
+                         offer_Gui);
+
+    m_Ui->m_QTabWidget->addTab(offer_Gui,
+                               offer->getName());
+
+    connect(offer,
+            SIGNAL(changed()),
+            SLOT(slot_Offer_Changed()));
+  }
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 MainWindow::~MainWindow()
 {
-  while(m_QList_Parts.isEmpty() == false)
-  {
-    delete m_QList_Parts.takeLast();
-  }
+  closeOffers();
+  closeMaterials();
 
   delete m_Ui;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void MainWindow::slot_Part_Changed()
+void MainWindow::slot_Offer_Changed()
 {
-  m_Ui->m_QLineEdit_Name                         ->setText(m_CurrentPart->getName());
-  m_Ui->m_QSpinBox_Pieces                        ->setValue(m_CurrentPart->getCount());
-  m_Ui->m_QDoubleSpinBox_Width                   ->setValue(m_CurrentPart->getWidth_mm());
-  m_Ui->m_QDoubleSpinBox_Height                  ->setValue(m_CurrentPart->getHeight_mm());
-  m_Ui->m_QDoubleSpinBox_CutLength               ->setValue(m_CurrentPart->getCutLenght_m());
-  m_Ui->m_QCheckBox_MaterialIncluded             ->setChecked(m_CurrentPart->getMaterialIncluded());
-  m_Ui->m_QComboBox_Material                     ->setCurrentText(m_CurrentPart->getMaterial()->getName());
-  m_Ui->m_QComboBox_Thickness                    ->setCurrentText(QString::number(m_CurrentPart->getThickness_mm()));
-  m_Ui->m_QSpinBox_MaterialKostenProQuadratMeter ->setValue(m_CurrentPart->getMaterialSurfaceValue());
-  m_Ui->m_QSpinBox_SchneidkostenProMeter         ->setValue(m_CurrentPart->getMaterialCutValue());
 
-  m_Ui->m_QLabel_MaterialKostenEinzeln ->setText(QString::number(m_CurrentPart->getMaterialPrice()));
-  m_Ui->m_QLabel_MaterialKosten        ->setText(QString::number(m_CurrentPart->getMaterialPriceTot()));
-  m_Ui->m_QLabel_SchneidKostenEinzeln  ->setText(QString::number(m_CurrentPart->getCutPrice()));
-  m_Ui->m_QLabel_SchneidKosten         ->setText(QString::number(m_CurrentPart->getCutPriceTot()));
-  m_Ui->m_QLabel_TotalEinzeln          ->setText(QString::number(m_CurrentPart->getPrice()));
-  m_Ui->m_QLabel_Total                 ->setText(QString::number(m_CurrentPart->getPriceTot()));
+}
 
-  updatePartsList();
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void MainWindow::on_m_QAction_File_New_triggered()
+{
+
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void MainWindow::on_m_QAction_File_Open_triggered()
+{
+
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void MainWindow::on_m_QAction_File_Save_triggered()
+{
+  Offer_Gui *offer_Gui = qobject_cast<Offer_Gui *>(m_Ui->m_QTabWidget->currentWidget());
+  Offer *offer = offer_Gui->getOffer();
+  if(offer->modified() == false)
+    return;
+
+  if(offer->getFilename().isEmpty())
+  {
+    QString filename = QFileDialog::getSaveFileName(this,
+                                                    tr("Save offer"),
+                                                    "",
+                                                    "*.offer.json");
+
+    if(filename.isEmpty())
+      return;
+
+    offer->save(filename);
+  }
+  else
+  {
+    offer->save();
+  }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void MainWindow::on_m_QAction_File_SaveAs_triggered()
+{
+
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -108,35 +139,7 @@ void MainWindow::on_m_QAction_File_Settings_triggered()
 
 void MainWindow::on_m_QAction_File_Exit_triggered()
 {
-  QApplication::quit();
-}
 
-//-----------------------------------------------------------------------------------------------------------------------------
-
-void MainWindow::on_m_QSpinBox_Pieces_valueChanged(int arg1)
-{
-  m_CurrentPart->setCount(arg1);
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-void MainWindow::on_m_QDoubleSpinBox_Width_valueChanged(double arg1)
-{
-  m_CurrentPart->setWidth_mm(arg1);
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-void MainWindow::on_m_QDoubleSpinBox_Height_valueChanged(double arg1)
-{
-  m_CurrentPart->setHeight_mm(arg1);
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-void MainWindow::on_m_QDoubleSpinBox_CutLength_valueChanged(double arg1)
-{
-  m_CurrentPart->setCutLenght_m(arg1);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -155,9 +158,6 @@ void MainWindow::loadMaterials(const QString &materialsDirectory)
                            tr("No material files found in '%1'.").arg(qDir.absolutePath()));
   }
 
-  // Clear materials in Gui
-  m_Ui->m_QComboBox_Material->clear();
-
   // Load Material files
   foreach (QFileInfo qFileInfo, qFileInfoList)
   {
@@ -167,8 +167,6 @@ void MainWindow::loadMaterials(const QString &materialsDirectory)
       material->Load();
       m_QMap_Materials.insert(material->getName(),
                               material);
-
-      m_Ui->m_QComboBox_Material->addItem(material->getName());
     }
     catch(const Exception &exception)
     {
@@ -181,52 +179,28 @@ void MainWindow::loadMaterials(const QString &materialsDirectory)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void MainWindow::updatePartsList()
+void MainWindow::closeMaterials()
 {
-  m_Ui->m_QTreeWidget->clear();
 
-  double total = 0.0;
-  for (int i=0; i<m_QList_Parts.size(); i++)
-  {
-    QTreeWidgetItem *qTreeWidgetItem = new QTreeWidgetItem(m_Ui->m_QTreeWidget);
-    qTreeWidgetItem->setText(Column_Position,   QString::number(i));
-    qTreeWidgetItem->setText(Column_Quantity,   QString::number(m_QList_Parts.at(i)->getCount()));
-    qTreeWidgetItem->setText(Column_Name,       m_QList_Parts.at(i)->getName());
-    qTreeWidgetItem->setText(Column_Size,       QString("%1x%2").arg(m_QList_Parts.at(i)->getWidth_mm())
-                                                                .arg(m_QList_Parts.at(i)->getHeight_mm()));
-    qTreeWidgetItem->setText(Column_Thickness,  QString::number(m_QList_Parts.at(i)->getThickness_mm()));
-    qTreeWidgetItem->setText(Column_CutLength,  QString::number(m_QList_Parts.at(i)->getCutLenght_m()));
-    qTreeWidgetItem->setText(Column_Material,   m_QList_Parts.at(i)->getMaterial()->getName());
-    qTreeWidgetItem->setText(Column_Price,      QString::number(m_QList_Parts.at(i)->getPrice()));
-    qTreeWidgetItem->setText(Column_PriceTotal, QString::number(m_QList_Parts.at(i)->getPriceTot()));
-
-    m_Ui->m_QTreeWidget->addTopLevelItem(qTreeWidgetItem);
-
-    total += m_QList_Parts.at(i)->getPriceTot();
-  }
-  m_Ui->m_QLabel_ListTotal->setText(QString::number(total));
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void MainWindow::on_m_QComboBox_Thickness_currentIndexChanged(const QString &value)
+void MainWindow::loadOffers()
 {
-  if(value.isEmpty())
-    return;
 
-  m_CurrentPart->setThickness_mm(value.toDouble());
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void MainWindow::on_m_QComboBox_Material_currentIndexChanged(const QString &value)
+void MainWindow::closeOffers()
 {
-  Material *material = m_QMap_Materials.value(value);
-  m_CurrentPart->setMaterial(material);
-
-  m_Ui->m_QComboBox_Thickness->clear();
-  foreach (double thickness, material->getThicknessList())
+  for(int i = m_QMap_Materials.size() -1; i <= 0; i--)
   {
-    m_Ui->m_QComboBox_Thickness->addItem(QString::number(thickness));
+    delete m_QMap_Offers.values().at(i);
+    delete m_QMap_Offers.keys().at(i);
   }
 }
+
+
+

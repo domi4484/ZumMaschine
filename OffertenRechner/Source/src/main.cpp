@@ -1,4 +1,8 @@
+
+// Project includes ------------------------
 #include "MainWindow.h"
+
+// Qt includes -----------------------------
 #include <QApplication>
 
 int main(int argc, char *argv[])
@@ -9,7 +13,7 @@ int main(int argc, char *argv[])
   qApplication.setOrganizationName   ("Lowerspot");
   qApplication.setOrganizationDomain ("lowerspot.com");
   qApplication.setApplicationName    ("Parts Calculator");
-  qApplication.setApplicationVersion ("V0.0.1");
+  qApplication.setApplicationVersion ("V0.0.2");
 
 
   MainWindow mainWindow;

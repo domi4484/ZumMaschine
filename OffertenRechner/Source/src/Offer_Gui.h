@@ -11,6 +11,7 @@
 
 // Forward declarations --------------------
 namespace Ui { class Offer_Gui; }
+class Offer;
 class Settings;
 class Material;
 class QFileSystemModel;
@@ -35,9 +36,12 @@ public:
     Column_PriceTotal
   };
 
-  explicit Offer_Gui(QWidget *parent = 0);
+  explicit Offer_Gui(Offer *offer,
+                     QWidget *parent = 0);
   ~Offer_Gui();
     
+  Offer *getOffer() const { return m_Offer; }
+
 private slots:
 
   void slot_Part_Changed();
@@ -56,6 +60,9 @@ private slots:
 private:
 
   Ui::Offer_Gui *m_Ui;
+
+  // Link to offer
+  Offer * m_Offer;
 
   Settings *m_Settings;
 

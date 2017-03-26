@@ -19,9 +19,11 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-Offer_Gui::Offer_Gui(QWidget *parent) :
+Offer_Gui::Offer_Gui(Offer *offer,
+                     QWidget *parent) :
   QWidget(parent),
   m_Ui(new Ui::Offer_Gui),
+  m_Offer(offer),
   m_CurrentPart(NULL),
   m_QList_Parts()
 {
