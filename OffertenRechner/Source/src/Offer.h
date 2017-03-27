@@ -13,6 +13,18 @@ class Offer : public QObject
   Q_OBJECT
 public:
 
+  class _CONST
+  {
+  public:
+    static const QString FILENAME_EXTENSION;
+
+    class JSON
+    {
+    public:
+      static const QString NAME;
+    }; // JSON
+  }; // _CONST
+
   explicit Offer(QObject *parent = 0);
 
   void setName(const QString &name);
@@ -22,6 +34,8 @@ public:
 
   bool modified() const { return m_Modified; }
   void save(const QString &filename = QString());
+
+  QJsonObject toJsonObject() const;
 
 signals:
 
