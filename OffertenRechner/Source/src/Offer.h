@@ -29,12 +29,15 @@ public:
 
   void setName(const QString &name);
 
-  QString getName() const { return m_Name; }
-  QString getFilename() const { return m_QFileInfo.fileName(); }
+  QString   getName() const { return m_Name; }
+  QString   getFilename() const { return m_QFileInfo.fileName(); }
+  QFileInfo getFileInfo() const { return m_QFileInfo; }
 
   bool modified() const { return m_Modified; }
+  void open(const QString &filename);
   void save(const QString &filename = QString());
 
+  void fromJsonObject(const QJsonObject &qJsonObject_Root);
   QJsonObject toJsonObject() const;
 
 signals:

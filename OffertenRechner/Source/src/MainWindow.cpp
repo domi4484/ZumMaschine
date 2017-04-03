@@ -41,6 +41,8 @@ MainWindow::MainWindow(QWidget *parent) :
   // Load materials
   loadMaterials(m_Settings->get_MaterialsDirectory());
 
+  // TODO load last offers
+
   // Default Offer
   if(m_QMap_Offers.isEmpty())
   {
@@ -88,7 +90,53 @@ void MainWindow::on_m_QAction_File_New_triggered()
 
 void MainWindow::on_m_QAction_File_Open_triggered()
 {
+  QString filename = QFileDialog::getOpenFileName(this,
+                                                  tr("Open offer document"),
+                                                  QString(),
+                                                  "*" + Offer::_CONST::FILENAME_EXTENSION);
 
+  if(filename.isEmpty())
+    return;
+
+  QFileInfo qFileInfo(filename);
+
+  // Check if already open
+  foreach (Offer *offer, m_QMap_Offers.keys())
+  {
+    if(offer->getFileInfo() == qFileInfo)
+    {
+      m_Ui->m_QTabWidget->setCurrentWidget(m_QMap_Offers.value(offer));
+      return;
+    }
+  }
+
+  // Open offer
+  Offer *offer = new Offer();
+  try
+  {
+    offer->open(filename);
+    Offer_Gui *offer_Gui = new Offer_Gui(offer,
+                                         this);
+    m_QMap_Offers.insert(offer,
+                         offer_Gui);
+
+    m_Ui->m_QTabWidget->addTab(offer_Gui,
+                               offer->getName());
+
+    m_Ui->m_QTabWidget->setCurrentWidget(offer_Gui);
+
+    connect(offer,
+            SIGNAL(changed()),
+            SLOT(slot_Offer_Changed()));
+  }
+  catch(const Exception &exception)
+  {
+    QMessageBox::critical(this,
+                          tr("Error opening offer."),
+                          exception.GetText());
+
+    delete offer;
+  }
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

@@ -36,6 +36,29 @@ void Offer::setName(const QString &name)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+void Offer::open(const QString &filename)
+{
+  if(filename.isEmpty())
+  {
+    throw Exception(tr("Filename not specified"));
+  }
+
+  m_QFileInfo.setFile(filename);
+
+  QFile qFile(m_QFileInfo.filePath());
+  if(qFile.open(QIODevice::ReadOnly | QIODevice::Text)
+     == false)
+  {
+    throw Exception(tr("Can't open '%1' for reading").arg(m_QFileInfo.filePath()));
+  }
+
+  QJsonDocument qJsonDocument = QJsonDocument::fromJson(qFile.readAll());
+
+  Offer::fromJsonObject(qJsonDocument.object());
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 void Offer::save(const QString &filename)
 {
   if(   filename.isEmpty()
@@ -58,6 +81,15 @@ void Offer::save(const QString &filename)
   }
 
   qFile.write(qJsonDocument.toJson());
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Offer::fromJsonObject(const QJsonObject &qJsonObject_Root)
+{
+  m_Name = qJsonObject_Root.value(_CONST::JSON::NAME).toString();
+
+  emit changed();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
