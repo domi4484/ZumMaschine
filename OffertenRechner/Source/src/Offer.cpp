@@ -8,17 +8,22 @@
 // Qt includes -----------------------------
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonValue>
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 const QString Offer::_CONST::FILENAME_EXTENSION(".offer.json");
 
-const QString Offer::_CONST::JSON::NAME("name");
+const QString Offer::_CONST::JSON::VALUE_NAME("Name");
+const QString Offer::_CONST::JSON::ARRAY_PARTS("Parts");
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-Offer::Offer(QObject *parent)
+Offer::Offer(QMap<QString, Material *> *qMap_Materials,
+             QObject *parent)
   : QObject(parent)
+  , m_QMap_Materials(qMap_Materials)
   , m_Name()
   , m_QList_Parts()
   , m_Modified(true)
@@ -87,7 +92,22 @@ void Offer::save(const QString &filename)
 
 void Offer::fromJsonObject(const QJsonObject &qJsonObject_Root)
 {
-  m_Name = qJsonObject_Root.value(_CONST::JSON::NAME).toString();
+  m_Name = qJsonObject_Root.value(_CONST::JSON::VALUE_NAME).toString();
+
+  m_QList_Parts.clear();
+  QJsonArray qJsonArray_Parts = qJsonObject_Root.value(_CONST::JSON::ARRAY_PARTS).toArray();
+  foreach (QJsonValue qJSonValue_Part, qJsonArray_Parts)
+  {
+    Part *part = new Part(m_QMap_Materials,
+                          this);
+    part->fromJsonObject(qJSonValue_Part.toObject());
+
+    m_QList_Parts.append(part);
+
+    connect(part,
+            SIGNAL(changed()),
+            SLOT(slot_part_changed()));
+  }
 
   emit changed();
 }
@@ -97,7 +117,7 @@ void Offer::fromJsonObject(const QJsonObject &qJsonObject_Root)
 QJsonObject Offer::toJsonObject() const
 {
   QJsonObject qJsonObject_Root;
-  qJsonObject_Root.insert(_CONST::JSON::NAME,
+  qJsonObject_Root.insert(_CONST::JSON::VALUE_NAME,
                           m_Name);
 
   return qJsonObject_Root;

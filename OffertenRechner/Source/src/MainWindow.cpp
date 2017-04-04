@@ -25,6 +25,8 @@
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
   m_Ui(new Ui::MainWindow),
+  m_Settings(NULL),
+  m_QMap_Materials(),
   m_QMap_Offers()
 {
   // Qt ui setup
@@ -46,9 +48,11 @@ MainWindow::MainWindow(QWidget *parent) :
   // Default Offer
   if(m_QMap_Offers.isEmpty())
   {
-    Offer *offer = new Offer();
+    Offer *offer = new Offer(&m_QMap_Materials);
     offer->setName("New");
     Offer_Gui *offer_Gui = new Offer_Gui(offer,
+                                         m_Settings,
+                                         &m_QMap_Materials,
                                          this);
     m_QMap_Offers.insert(offer,
                          offer_Gui);
@@ -111,11 +115,13 @@ void MainWindow::on_m_QAction_File_Open_triggered()
   }
 
   // Open offer
-  Offer *offer = new Offer();
+  Offer *offer = new Offer(&m_QMap_Materials);
   try
   {
     offer->open(filename);
     Offer_Gui *offer_Gui = new Offer_Gui(offer,
+                                         m_Settings,
+                                         &m_QMap_Materials,
                                          this);
     m_QMap_Offers.insert(offer,
                          offer_Gui);
@@ -264,5 +270,9 @@ void MainWindow::closeOffers()
   }
 }
 
+//-----------------------------------------------------------------------------------------------------------------------------
 
+void MainWindow::on_m_QTabWidget_tabCloseRequested(int index)
+{
 
+}

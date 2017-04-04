@@ -16,12 +16,12 @@
 const QString Material::_CONST::LOCATION           ("Werkstoffen");
 const QString Material::_CONST::FILENAME_EXTENSION (".material.json");
 
-const QString Material::_CONST::JSON::NAME ("name");
+const QString Material::_CONST::JSON::NAME ("Name");
 
-const QString Material::_CONST::JSON::VALUES::ROOT_NAME    ("values");
-const QString Material::_CONST::JSON::VALUES::THICKNESS    ("thickness");
-const QString Material::_CONST::JSON::VALUES::SURFACEVALUE ("surfaceValue");
-const QString Material::_CONST::JSON::VALUES::CUTVALUE     ("cutValue");
+const QString Material::_CONST::JSON::VALUES::ROOT_NAME    ("Values");
+const QString Material::_CONST::JSON::VALUES::THICKNESS    ("Thickness");
+const QString Material::_CONST::JSON::VALUES::SURFACEVALUE ("SurfaceValue");
+const QString Material::_CONST::JSON::VALUES::CUTVALUE     ("CutValue");
 
 //-----------------------------------------------------------------------------------------------------------------------------
 

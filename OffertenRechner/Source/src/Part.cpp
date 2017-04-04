@@ -7,8 +7,25 @@
 
 // Qt includes -----------------------------
 
-Part::Part(QObject *parent) :
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+const QString Part::_CONST::JSON::VALUE_POSITION         ("Position");
+const QString Part::_CONST::JSON::VALUE_NAME             ("Name");
+const QString Part::_CONST::JSON::VALUE_COUNT            ("Count");
+const QString Part::_CONST::JSON::VALUE_WIDTH_MM         ("Width_mm");
+const QString Part::_CONST::JSON::VALUE_HEIGHT_MM        ("Height_mm");
+const QString Part::_CONST::JSON::VALUE_THICKNESS_MM     ("Thickness_mm");
+const QString Part::_CONST::JSON::VALUE_CUTLENGTH_M      ("CutLength_m");
+const QString Part::_CONST::JSON::VALUE_MATERIALINCLUDED ("MaterialIncluded");
+const QString Part::_CONST::JSON::VALUE_MATERIALNAME     ("MaterialName");
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+Part::Part(QMap<QString, Material*> *qMap_Materials,
+           QObject *parent) :
   QObject(parent),
+  m_QMap_Materials   (qMap_Materials),
   m_Position         (),
   m_Name             (),
   m_Count            (),
@@ -107,6 +124,38 @@ double Part::getMaterialSurfaceValue() const
 double Part::getMaterialCutValue() const
 {
   return m_Material->getCutValue(m_Thickness_mm);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Part::fromJsonObject(const QJsonObject &qJsonObject_Root)
+{
+  m_Position = qJsonObject_Root.value(_CONST::JSON::VALUE_POSITION).toInt();
+  m_Name     = qJsonObject_Root.value(_CONST::JSON::VALUE_NAME).toString();
+
+  m_Count            = qJsonObject_Root.value(_CONST::JSON::VALUE_COUNT).toInt();
+  m_Width_mm         = qJsonObject_Root.value(_CONST::JSON::VALUE_WIDTH_MM).toDouble();
+  m_Height_mm        = qJsonObject_Root.value(_CONST::JSON::VALUE_HEIGHT_MM).toDouble();
+  m_Thickness_mm     = qJsonObject_Root.value(_CONST::JSON::VALUE_THICKNESS_MM).toDouble();
+  m_CutLenght_m      = qJsonObject_Root.value(_CONST::JSON::VALUE_CUTLENGTH_M).toDouble();
+  m_MaterialIncluded = qJsonObject_Root.value(_CONST::JSON::VALUE_MATERIALINCLUDED).toBool();
+
+  QString materialName = qJsonObject_Root.value(_CONST::JSON::VALUE_MATERIALNAME).toString();
+  m_Material = m_QMap_Materials->value(materialName);
+
+  calculate();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+QJsonObject Part::toJsonObject() const
+{
+  QJsonObject qJsonObject_Root;
+
+  qJsonObject_Root.insert(_CONST::JSON::VALUE_NAME,
+                          m_Name);
+
+  return qJsonObject_Root;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

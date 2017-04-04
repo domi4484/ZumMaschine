@@ -21,11 +21,13 @@ public:
     class JSON
     {
     public:
-      static const QString NAME;
+      static const QString VALUE_NAME;
+      static const QString ARRAY_PARTS;
     }; // JSON
   }; // _CONST
 
-  explicit Offer(QObject *parent = 0);
+  explicit Offer(QMap<QString, Material *> *qMap_Materials,
+                 QObject *parent = 0);
 
   void setName(const QString &name);
 
@@ -45,6 +47,9 @@ signals:
   void changed();
 
 private:
+
+  // Link to materials
+  QMap<QString, Material *> *m_QMap_Materials;
 
   QString   m_Name;
   QFileInfo m_QFileInfo;

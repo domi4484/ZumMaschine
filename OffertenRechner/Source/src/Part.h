@@ -3,6 +3,7 @@
 
 // Qt includes -----------------------------
 #include <QObject>
+#include <QJsonObject>
 
 // Forward declarations --------------------
 class Material;
@@ -12,7 +13,26 @@ class Part : public QObject
   Q_OBJECT
 public:
 
-  explicit Part(QObject *parent = 0);
+  class _CONST
+  {
+  public:
+    class JSON
+    {
+    public:
+      static const QString VALUE_POSITION;
+      static const QString VALUE_NAME;
+      static const QString VALUE_COUNT;
+      static const QString VALUE_WIDTH_MM;
+      static const QString VALUE_HEIGHT_MM;
+      static const QString VALUE_THICKNESS_MM;
+      static const QString VALUE_CUTLENGTH_M;
+      static const QString VALUE_MATERIALINCLUDED;
+      static const QString VALUE_MATERIALNAME;
+    }; // JSON
+  }; // _CONST
+
+  explicit Part(QMap<QString, Material *> *qMapMaterials,
+                QObject *parent = 0);
 
   void setName(const QString &name);
   void setCount(int count);
@@ -45,6 +65,9 @@ public:
   double getPrice()    const { return m_Price;    }
   double getPriceTot() const { return m_PriceTot; }
 
+  void fromJsonObject(const QJsonObject &qJsonObject_Root);
+  QJsonObject toJsonObject() const;
+
 signals:
 
   void changed();
@@ -52,6 +75,9 @@ signals:
 public slots:
 
 private:
+
+  // Link to materials
+  QMap<QString, Material *> *m_QMap_Materials;
 
   int       m_Position;
   QString   m_Name;

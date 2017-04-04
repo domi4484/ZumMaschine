@@ -1,10 +1,10 @@
 {
-  "name": "Edelstahl",
-  "values": [
+  "Name": "Edelstahl",
+  "Values": [
     {
-      "thickness":3,
-      "surfaceValue":150,
-      "cutValue":19
+      "Thickness":3,
+      "SurfaceValue":150,
+      "CutValue":19
     }
   ]
 }

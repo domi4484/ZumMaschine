@@ -51,6 +51,8 @@ private slots:
   void on_m_QAction_File_Settings_triggered();
   void on_m_QAction_File_Exit_triggered();
 
+  void on_m_QTabWidget_tabCloseRequested(int index);
+
 private:
 
   Ui::MainWindow *m_Ui;

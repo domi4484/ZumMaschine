@@ -1,20 +1,20 @@
 {
-  "name": "Alu",
-  "values": [
+  "Name": "Alu",
+  "Values": [
     {
-      "thickness":2,
-      "surfaceValue":35,
-      "cutValue":16
+      "Thickness":2,
+      "SurfaceValue":35,
+      "CutValue":16
     },
     {
-      "thickness":3,
-      "surfaceValue":70,
-      "cutValue":19
+      "Thickness":3,
+      "SurfaceValue":70,
+      "CutValue":19
     },
     {
-      "thickness":4,
-      "surfaceValue":95,
-      "cutValue":21
+      "Thickness":4,
+      "SurfaceValue":95,
+      "CutValue":21
     }
   ]
 }

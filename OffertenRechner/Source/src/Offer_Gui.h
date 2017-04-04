@@ -37,6 +37,8 @@ public:
   };
 
   explicit Offer_Gui(Offer *offer,
+                     Settings *settings,
+                     QMap<QString, Material *> *qMap_Materials,
                      QWidget *parent = 0);
   ~Offer_Gui();
     
@@ -64,14 +66,14 @@ private:
   // Link to offer
   Offer * m_Offer;
 
+  // Lik to settings
   Settings *m_Settings;
 
-  QMap<QString, Material *> m_QMap_Materials;
+  // Link to materials
+  QMap<QString, Material *> *m_QMap_Materials;
 
   Part *m_CurrentPart;
   QList<Part *> m_QList_Parts;
-
-  void loadMaterials(const QString &materialsDirectory);
 
   void updatePartsList();
 };

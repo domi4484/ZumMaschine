@@ -20,18 +20,28 @@
 //-----------------------------------------------------------------------------------------------------------------------------
 
 Offer_Gui::Offer_Gui(Offer *offer,
+                     Settings *settings,
+                     QMap<QString, Material *> *qMap_Materials,
                      QWidget *parent) :
   QWidget(parent),
   m_Ui(new Ui::Offer_Gui),
   m_Offer(offer),
+  m_Settings(settings),
+  m_QMap_Materials(qMap_Materials),
   m_CurrentPart(NULL),
   m_QList_Parts()
 {
   // Qt ui setup
   m_Ui->setupUi(this);
 
-  setWindowTitle(QString("%1 - %2").arg(QApplication::applicationName())
-                                   .arg(QApplication::applicationVersion()));
+  // Clear materials in Gui
+  m_Ui->m_QComboBox_Material->clear();
+
+  // Load Material files
+  foreach (Material *material, m_QMap_Materials->values())
+  {
+    m_Ui->m_QComboBox_Material->addItem(material->getName());
+  }
 
   m_Ui->m_QTreeWidget->setColumnWidth(Column_Position,   30);
   m_Ui->m_QTreeWidget->setColumnWidth(Column_Quantity,   30);
@@ -43,11 +53,8 @@ Offer_Gui::Offer_Gui(Offer *offer,
   m_Ui->m_QTreeWidget->setColumnWidth(Column_Price,      50);
   m_Ui->m_QTreeWidget->setColumnWidth(Column_PriceTotal, 50);
 
-  // Settings
-  m_Settings = new Settings(this);
-
   // Default Piece
-  Part *part = new Part();
+  Part *part = new Part(m_QMap_Materials);
   m_QList_Parts.append(part);
   m_CurrentPart = part;
 
@@ -55,8 +62,6 @@ Offer_Gui::Offer_Gui(Offer *offer,
           SIGNAL(changed()),
           SLOT(slot_Part_Changed()));
 
-  // Load materials
-  loadMaterials(m_Settings->get_MaterialsDirectory());
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -143,46 +148,6 @@ void Offer_Gui::on_m_QDoubleSpinBox_CutLength_valueChanged(double arg1)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void Offer_Gui::loadMaterials(const QString &materialsDirectory)
-{
-  // Get material files
-  QDir qDir(materialsDirectory);
-  QFileInfoList qFileInfoList = qDir.entryInfoList(QStringList() << "*" + Material::_CONST::FILENAME_EXTENSION,
-                                                   QDir::Files);
-
-  if(qFileInfoList.isEmpty())
-  {
-     QMessageBox::critical(this,
-                           tr("Error opening material file."),
-                           tr("No material files found in '%1'.").arg(qDir.absolutePath()));
-  }
-
-  // Clear materials in Gui
-  m_Ui->m_QComboBox_Material->clear();
-
-  // Load Material files
-  foreach (QFileInfo qFileInfo, qFileInfoList)
-  {
-    Material *material = new Material(qFileInfo);
-    try
-    {
-      material->Load();
-      m_QMap_Materials.insert(material->getName(),
-                              material);
-
-      m_Ui->m_QComboBox_Material->addItem(material->getName());
-    }
-    catch(const Exception &exception)
-    {
-      QMessageBox::critical(this,
-                            tr("Error opening material file."),
-                            exception.GetText());
-    }
-  }
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
 void Offer_Gui::updatePartsList()
 {
   m_Ui->m_QTreeWidget->clear();
@@ -223,7 +188,10 @@ void Offer_Gui::on_m_QComboBox_Thickness_currentIndexChanged(const QString &valu
 
 void Offer_Gui::on_m_QComboBox_Material_currentIndexChanged(const QString &value)
 {
-  Material *material = m_QMap_Materials.value(value);
+  if(m_CurrentPart == NULL)
+    return;
+
+  Material *material = m_QMap_Materials->value(value);
   m_CurrentPart->setMaterial(material);
 
   m_Ui->m_QComboBox_Thickness->clear();

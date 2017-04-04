@@ -1,25 +1,25 @@
 {
-  "name": "Stahl",
-  "values": [
+  "Name": "Stahl",
+  "Values": [
     {
-      "thickness":2,
-      "surfaceValue":30,
-      "cutValue":10
+      "Thickness":2,
+      "SurfaceValue":30,
+      "CutValue":10
     },
     {
-      "thickness":3,
-      "surfaceValue":60,
-      "cutValue":13
+      "Thickness":3,
+      "SurfaceValue":60,
+      "CutValue":13
     },
     {
-      "thickness":4,
-      "surfaceValue":90,
-      "cutValue":16
+      "Thickness":4,
+      "SurfaceValue":90,
+      "CutValue":16
     },
     {
-      "thickness":30,
-      "surfaceValue":90,
-      "cutValue":45
+      "Thickness":30,
+      "SurfaceValue":90,
+      "CutValue":45
     }
   ]
 }
