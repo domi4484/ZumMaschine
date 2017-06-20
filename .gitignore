@@ -1,4 +1,6 @@
 moc_*
 ui_*
+qrc_*
 *.o
+*.pro.user
 Makefile
