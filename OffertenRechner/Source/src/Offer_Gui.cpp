@@ -34,15 +34,6 @@ Offer_Gui::Offer_Gui(Offer *offer,
   // Qt ui setup
   m_Ui->setupUi(this);
 
-  // Clear materials in Gui
-  m_Ui->m_QComboBox_Material->clear();
-
-  // Load Material files
-  foreach (Material *material, m_QMap_Materials->values())
-  {
-    m_Ui->m_QComboBox_Material->addItem(material->getName());
-  }
-
   m_Ui->m_QTreeWidget->setColumnWidth(Column_Position,   30);
   m_Ui->m_QTreeWidget->setColumnWidth(Column_Quantity,   30);
   m_Ui->m_QTreeWidget->setColumnWidth(Column_Name,       150);
@@ -58,10 +49,20 @@ Offer_Gui::Offer_Gui(Offer *offer,
   m_QList_Parts.append(part);
   m_CurrentPart = part;
 
+  // Clear materials in Gui
+  m_Ui->m_QComboBox_Material->clear();
+
+  // Load Material files
+  foreach (Material *material, m_QMap_Materials->values())
+  {
+    m_Ui->m_QComboBox_Material->addItem(material->getName());
+  }
+
   connect(part,
           SIGNAL(changed()),
           SLOT(slot_Part_Changed()));
 
+  slot_Part_Changed();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -181,6 +182,9 @@ void Offer_Gui::on_m_QComboBox_Thickness_currentIndexChanged(const QString &valu
   if(value.isEmpty())
     return;
 
+  if (m_CurrentPart == NULL)
+    return;
+
   m_CurrentPart->setThickness_mm(value.toDouble());
 }
 
@@ -188,11 +192,13 @@ void Offer_Gui::on_m_QComboBox_Thickness_currentIndexChanged(const QString &valu
 
 void Offer_Gui::on_m_QComboBox_Material_currentIndexChanged(const QString &value)
 {
-  if(m_CurrentPart == NULL)
-    return;
 
   Material *material = m_QMap_Materials->value(value);
-  m_CurrentPart->setMaterial(material);
+
+  if(m_CurrentPart != NULL)
+  {
+    m_CurrentPart->setMaterial(material);
+  }
 
   m_Ui->m_QComboBox_Thickness->clear();
   foreach (double thickness, material->getThicknessList())
