@@ -46,7 +46,8 @@ MainWindow::MainWindow(QWidget *parent) :
   // TODO load last offers
 
   // Default Offer
-  if(m_QMap_Offers.isEmpty())
+  if(   m_QMap_Offers.isEmpty()
+     && m_QMap_Materials.isEmpty() == false)
   {
     Offer *offer = new Offer(&m_QMap_Materials);
     offer->setName("New");
@@ -87,7 +88,30 @@ void MainWindow::slot_Offer_Changed()
 
 void MainWindow::on_m_QAction_File_New_triggered()
 {
+  // Check materials loaded
+  if(m_QMap_Materials.isEmpty())
+  {
+    QMessageBox::critical(this,
+                          tr("Error no material files loaded."),
+                          tr("Please check your settings."));
+    return;
+  }
 
+  Offer *offer = new Offer(&m_QMap_Materials);
+  offer->setName("New");
+  Offer_Gui *offer_Gui = new Offer_Gui(offer,
+                                       m_Settings,
+                                       &m_QMap_Materials,
+                                       this);
+  m_QMap_Offers.insert(offer,
+                       offer_Gui);
+
+  m_Ui->m_QTabWidget->addTab(offer_Gui,
+                             offer->getName());
+
+  connect(offer,
+          SIGNAL(changed()),
+          SLOT(slot_Offer_Changed()));
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
