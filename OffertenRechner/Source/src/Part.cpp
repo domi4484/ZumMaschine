@@ -31,10 +31,10 @@ Part::Part(QMap<QString, Material*> *qMap_Materials,
   m_Count            (),
   m_Width_mm         (),
   m_Height_mm        (),
-  m_Thickness_mm     (qMap_Materials->first()->getThicknessList().first()),
+  m_Thickness_mm     (0.0),
   m_CutLenght_m      (),
   m_MaterialIncluded (true),
-  m_Material         (qMap_Materials->first()),
+  m_Material         (NULL),
   m_Surface_m2       (0.0),
   m_Volume_m3        (0.0),
   m_MaterialPrice    (0.0),
@@ -44,6 +44,12 @@ Part::Part(QMap<QString, Material*> *qMap_Materials,
   m_Price            (0.0),
   m_PriceTot         (0.0)
 {
+  if(qMap_Materials->isEmpty() == false)
+  {
+    m_Material = qMap_Materials->first();
+    m_Thickness_mm = m_Material->getThicknessList().first();
+  }
+
   calculate();
 }
 
@@ -116,6 +122,9 @@ void Part::setMaterial(Material *material)
 
 double Part::getMaterialSurfaceValue() const
 {
+  if(m_Material == NULL)
+      return 0.0;
+
   return m_Material->getSurfaceValue(m_Thickness_mm);
 }
 
@@ -123,6 +132,9 @@ double Part::getMaterialSurfaceValue() const
 
 double Part::getMaterialCutValue() const
 {
+  if(m_Material == NULL)
+      return 0.0;
+
   return m_Material->getCutValue(m_Thickness_mm);
 }
 

@@ -263,7 +263,8 @@ void MainWindow::loadOffers()
 
 void MainWindow::closeOffers()
 {
-  for(int i = m_QMap_Materials.size() -1; i <= 0; i--)
+
+  for(int i = m_QMap_Offers.size() -1; i >= 0; i--)
   {
     delete m_QMap_Offers.values().at(i);
     delete m_QMap_Offers.keys().at(i);

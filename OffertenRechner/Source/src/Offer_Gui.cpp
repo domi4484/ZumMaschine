@@ -87,7 +87,14 @@ void Offer_Gui::slot_Part_Changed()
   m_Ui->m_QDoubleSpinBox_Height                  ->setValue(m_CurrentPart->getHeight_mm());
   m_Ui->m_QDoubleSpinBox_CutLength               ->setValue(m_CurrentPart->getCutLenght_m());
   m_Ui->m_QCheckBox_MaterialIncluded             ->setChecked(m_CurrentPart->getMaterialIncluded());
-  m_Ui->m_QComboBox_Material                     ->setCurrentText(m_CurrentPart->getMaterial()->getName());
+  if(m_CurrentPart->getMaterial() != NULL)
+  {
+    m_Ui->m_QComboBox_Material                     ->setCurrentText(m_CurrentPart->getMaterial()->getName());
+  }
+  else
+  {
+    m_Ui->m_QComboBox_Material                     ->setCurrentIndex(0);
+  }
   m_Ui->m_QComboBox_Thickness                    ->setCurrentText(QString::number(m_CurrentPart->getThickness_mm()));
   m_Ui->m_QSpinBox_MaterialKostenProQuadratMeter ->setValue(m_CurrentPart->getMaterialSurfaceValue());
   m_Ui->m_QSpinBox_SchneidkostenProMeter         ->setValue(m_CurrentPart->getMaterialCutValue());
@@ -164,7 +171,10 @@ void Offer_Gui::updatePartsList()
                                                                 .arg(m_QList_Parts.at(i)->getHeight_mm()));
     qTreeWidgetItem->setText(Column_Thickness,  QString::number(m_QList_Parts.at(i)->getThickness_mm()));
     qTreeWidgetItem->setText(Column_CutLength,  QString::number(m_QList_Parts.at(i)->getCutLenght_m()));
-    qTreeWidgetItem->setText(Column_Material,   m_QList_Parts.at(i)->getMaterial()->getName());
+    if(m_QList_Parts.at(i)->getMaterial() != NULL)
+    {
+      qTreeWidgetItem->setText(Column_Material,   m_QList_Parts.at(i)->getMaterial()->getName());
+    }
     qTreeWidgetItem->setText(Column_Price,      QString::number(m_QList_Parts.at(i)->getPrice()   , 'f', 2));
     qTreeWidgetItem->setText(Column_PriceTotal, QString::number(m_QList_Parts.at(i)->getPriceTot(), 'f', 2));
 
