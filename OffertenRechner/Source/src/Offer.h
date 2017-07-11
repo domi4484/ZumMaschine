@@ -35,7 +35,7 @@ public:
   QString   getFilename() const { return m_QFileInfo.fileName(); }
   QFileInfo getFileInfo() const { return m_QFileInfo; }
 
-  bool modified() const { return m_Modified; }
+  bool isModified() const { return m_Modified; }
   void open(const QString &filename);
   void save(const QString &filename = QString());
 

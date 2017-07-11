@@ -49,7 +49,6 @@ private slots:
   void slot_Part_Changed();
 
   void on_m_QAction_File_Settings_triggered();
-  void on_m_QAction_File_Exit_triggered();
 
   void on_m_QSpinBox_Pieces_valueChanged(int arg1);
   void on_m_QDoubleSpinBox_Width_valueChanged(double arg1);

@@ -121,13 +121,6 @@ void Offer_Gui::on_m_QAction_File_Settings_triggered()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void Offer_Gui::on_m_QAction_File_Exit_triggered()
-{
-  QApplication::quit();
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
 void Offer_Gui::on_m_QSpinBox_Pieces_valueChanged(int arg1)
 {
   m_CurrentPart->setCount(arg1);

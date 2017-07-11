@@ -177,7 +177,7 @@ void MainWindow::on_m_QAction_File_Save_triggered()
   {
     Offer_Gui *offer_Gui = qobject_cast<Offer_Gui *>(m_Ui->m_QTabWidget->currentWidget());
     Offer *offer = offer_Gui->getOffer();
-    if(offer->modified() == false)
+    if(offer->isModified() == false)
       return;
 
     if(offer->getFilename().isEmpty())
@@ -231,7 +231,7 @@ void MainWindow::on_m_QAction_File_Settings_triggered()
 
 void MainWindow::on_m_QAction_File_Exit_triggered()
 {
-
+  QApplication::quit();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -287,17 +287,33 @@ void MainWindow::loadOffers()
 
 void MainWindow::closeOffers()
 {
-
   for(int i = m_QMap_Offers.size() -1; i >= 0; i--)
   {
     delete m_QMap_Offers.values().at(i);
     delete m_QMap_Offers.keys().at(i);
   }
+  m_QMap_Offers.clear();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 void MainWindow::on_m_QTabWidget_tabCloseRequested(int index)
 {
+  Offer_Gui *offer_Gui = (Offer_Gui *)m_Ui->m_QTabWidget->widget(index);
+  Offer *offer = offer_Gui->getOffer();
 
+  if(offer->isModified() == true)
+  {
+    if(QMessageBox::question(this,
+                             tr("File close"),
+                             tr("The file '%1' has unsaved changes. Do you want to ignore changes and close it?").arg(offer->getFilename()))
+       == QMessageBox::No)
+    {
+      return;
+    }
+  }
+
+  m_QMap_Offers.take(offer);
+  delete offer_Gui;
+  delete offer;
 }
