@@ -6,6 +6,7 @@
 // Project includes ------------------------
 #include "Exception.h"
 #include "Material.h"
+#include "Materials_Gui.h"
 #include "Settings.h"
 #include "Settings_Gui.h"
 
@@ -21,13 +22,13 @@
 
 Offer_Gui::Offer_Gui(Offer *offer,
                      Settings *settings,
-                     QMap<QString, Material *> *qMap_Materials,
+                     Materials_Gui *materials_Gui,
                      QWidget *parent) :
   QWidget(parent),
   m_Ui(new Ui::Offer_Gui),
   m_Offer(offer),
   m_Settings(settings),
-  m_QMap_Materials(qMap_Materials),
+  m_Materials_Gui(materials_Gui),
   m_CurrentPart(NULL),
   m_QList_Parts()
 {
@@ -45,7 +46,7 @@ Offer_Gui::Offer_Gui(Offer *offer,
   m_Ui->m_QTreeWidget->setColumnWidth(Column_PriceTotal, 50);
 
   // Default Piece
-  Part *part = new Part(m_QMap_Materials);
+  Part *part = new Part(m_Materials_Gui);
   m_QList_Parts.append(part);
   m_CurrentPart = part;
 
@@ -53,7 +54,7 @@ Offer_Gui::Offer_Gui(Offer *offer,
   m_Ui->m_QComboBox_Material->clear();
 
   // Load Material files
-  foreach (Material *material, m_QMap_Materials->values())
+  foreach (Material *material, m_Materials_Gui->getList())
   {
     m_Ui->m_QComboBox_Material->addItem(material->getName());
   }
@@ -196,7 +197,7 @@ void Offer_Gui::on_m_QComboBox_Thickness_currentIndexChanged(const QString &valu
 void Offer_Gui::on_m_QComboBox_Material_currentIndexChanged(const QString &value)
 {
 
-  Material *material = m_QMap_Materials->value(value);
+  Material *material = m_Materials_Gui->getMaterial(value);
 
   if(m_CurrentPart != NULL)
   {

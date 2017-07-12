@@ -15,6 +15,7 @@ class Offer;
 class Offer_Gui;
 class Settings;
 class Material;
+class Materials_Gui;
 class QFileSystemModel;
 class QFileSystemWatcher;
 
@@ -59,12 +60,11 @@ private:
 
   Settings *m_Settings;
 
-  QMap<QString, Material *> m_QMap_Materials;
+  QDockWidget *m_QDockWidget_MaterialsGui;
+  Materials_Gui *m_Materials_Gui;
 
   QMap<Offer *, Offer_Gui*> m_QMap_Offers;
 
-  void loadMaterials(const QString &materialsDirectory);
-  void closeMaterials();
 
   void loadOffers();
   void closeOffers();

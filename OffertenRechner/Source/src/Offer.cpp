@@ -4,6 +4,7 @@
 
 // Project includes ------------------------
 #include "Exception.h"
+#include "Materials_Gui.h"
 
 // Qt includes -----------------------------
 #include <QJsonDocument>
@@ -20,10 +21,10 @@ const QString Offer::_CONST::JSON::ARRAY_PARTS("Parts");
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-Offer::Offer(QMap<QString, Material *> *qMap_Materials,
+Offer::Offer(Materials_Gui *materials_Gui,
              QObject *parent)
   : QObject(parent)
-  , m_QMap_Materials(qMap_Materials)
+  , m_Materials_Gui(materials_Gui)
   , m_Name()
   , m_QList_Parts()
   , m_Modified(true)
@@ -98,7 +99,7 @@ void Offer::fromJsonObject(const QJsonObject &qJsonObject_Root)
   QJsonArray qJsonArray_Parts = qJsonObject_Root.value(_CONST::JSON::ARRAY_PARTS).toArray();
   foreach (QJsonValue qJSonValue_Part, qJsonArray_Parts)
   {
-    Part *part = new Part(m_QMap_Materials,
+    Part *part = new Part(m_Materials_Gui,
                           this);
     part->fromJsonObject(qJSonValue_Part.toObject());
 

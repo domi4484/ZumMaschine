@@ -8,6 +8,9 @@
 #include <QObject>
 #include <QFileInfo>
 
+// Forward declaration ---------------------
+class Materials_Gui;
+
 class Offer : public QObject
 {
   Q_OBJECT
@@ -26,7 +29,7 @@ public:
     }; // JSON
   }; // _CONST
 
-  explicit Offer(QMap<QString, Material *> *qMap_Materials,
+  explicit Offer(Materials_Gui *materials_Gui,
                  QObject *parent = 0);
 
   void setName(const QString &name);
@@ -48,8 +51,8 @@ signals:
 
 private:
 
-  // Link to materials
-  QMap<QString, Material *> *m_QMap_Materials;
+  // Link to materials gui
+  Materials_Gui *m_Materials_Gui;
 
   QString   m_Name;
   QFileInfo m_QFileInfo;

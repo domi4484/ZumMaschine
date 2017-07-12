@@ -38,7 +38,8 @@ SOURCES += main.cpp\
     Material.cpp \
     Exception.cpp \
     Offer_Gui.cpp \
-    Offer.cpp
+    Offer.cpp \
+    Materials_Gui.cpp
 
 HEADERS  += MainWindow.h \
     Settings.h \
@@ -47,11 +48,13 @@ HEADERS  += MainWindow.h \
     Material.h \
     Exception.h \
     Offer_Gui.h \
-    Offer.h
+    Offer.h \
+    Materials_Gui.h
 
 FORMS    += MainWindow.ui \
     Settings_Gui.ui \
-    Offer_Gui.ui
+    Offer_Gui.ui \
+    Materials_Gui.ui
 
 RESOURCES += \
     Resources/Resources.qrc

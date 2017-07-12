@@ -7,6 +7,7 @@
 
 // Forward declarations --------------------
 class Material;
+class Materials_Gui;
 
 class Part : public QObject
 {
@@ -31,7 +32,7 @@ public:
     }; // JSON
   }; // _CONST
 
-  explicit Part(QMap<QString, Material *> *qMapMaterials,
+  explicit Part(Materials_Gui *materials_Gui,
                 QObject *parent = 0);
 
   void setName(const QString &name);
@@ -76,8 +77,8 @@ public slots:
 
 private:
 
-  // Link to materials
-  QMap<QString, Material *> *m_QMap_Materials;
+  // Link to Materials_Gui
+  Materials_Gui *m_Materials_Gui;
 
   int       m_Position;
   QString   m_Name;

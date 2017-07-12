@@ -6,6 +6,7 @@
 // Project includes ------------------------
 #include "Exception.h"
 #include "Material.h"
+#include "Materials_Gui.h"
 #include "Settings.h"
 #include "Settings_Gui.h"
 #include "Offer.h"
@@ -13,6 +14,7 @@
 
 // Qt includes -----------------------------
 #include <QDebug>
+#include <QDockWidget>
 #include <QFileDialog>
 #include <QTimer>
 #include <QFileSystemModel>
@@ -26,7 +28,8 @@ MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
   m_Ui(new Ui::MainWindow),
   m_Settings(NULL),
-  m_QMap_Materials(),
+  m_QDockWidget_MaterialsGui(NULL),
+  m_Materials_Gui(NULL),
   m_QMap_Offers()
 {
   // Qt ui setup
@@ -41,19 +44,35 @@ MainWindow::MainWindow(QWidget *parent) :
   m_Settings = new Settings(this);
 
   // Load materials
-  loadMaterials(m_Settings->get_MaterialsDirectory());
+  m_QDockWidget_MaterialsGui = new QDockWidget(tr("Materials"),
+                                               this);
+  m_Materials_Gui = new Materials_Gui(m_QDockWidget_MaterialsGui);
+  m_QDockWidget_MaterialsGui->setWidget(m_Materials_Gui);
+  m_QDockWidget_MaterialsGui->setFloating(false);
+  MainWindow::addDockWidget(Qt::RightDockWidgetArea,
+                            m_QDockWidget_MaterialsGui);
+  try
+  {
+    m_Materials_Gui->loadMaterials(m_Settings->get_MaterialsDirectory());
+  }
+  catch(const Exception &exception)
+  {
+    QMessageBox::critical(this,
+                          tr("Error opening material file."),
+                          exception.GetText());
+  }
 
   // TODO load last offers
 
   // Default Offer
   if(   m_QMap_Offers.isEmpty()
-     && m_QMap_Materials.isEmpty() == false)
+     && m_Materials_Gui->isEmpty() == false)
   {
-    Offer *offer = new Offer(&m_QMap_Materials);
+    Offer *offer = new Offer(m_Materials_Gui);
     offer->setName("New");
     Offer_Gui *offer_Gui = new Offer_Gui(offer,
                                          m_Settings,
-                                         &m_QMap_Materials,
+                                         m_Materials_Gui,
                                          this);
     m_QMap_Offers.insert(offer,
                          offer_Gui);
@@ -72,7 +91,9 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
   closeOffers();
-  closeMaterials();
+
+  delete m_Materials_Gui;
+  delete m_QDockWidget_MaterialsGui;
 
   delete m_Ui;
 }
@@ -89,7 +110,7 @@ void MainWindow::slot_Offer_Changed()
 void MainWindow::on_m_QAction_File_New_triggered()
 {
   // Check materials loaded
-  if(m_QMap_Materials.isEmpty())
+  if(m_Materials_Gui->isEmpty())
   {
     QMessageBox::critical(this,
                           tr("Error no material files loaded."),
@@ -97,11 +118,11 @@ void MainWindow::on_m_QAction_File_New_triggered()
     return;
   }
 
-  Offer *offer = new Offer(&m_QMap_Materials);
+  Offer *offer = new Offer(m_Materials_Gui);
   offer->setName("New");
   Offer_Gui *offer_Gui = new Offer_Gui(offer,
                                        m_Settings,
-                                       &m_QMap_Materials,
+                                       m_Materials_Gui,
                                        this);
   m_QMap_Offers.insert(offer,
                        offer_Gui);
@@ -139,13 +160,13 @@ void MainWindow::on_m_QAction_File_Open_triggered()
   }
 
   // Open offer
-  Offer *offer = new Offer(&m_QMap_Materials);
+  Offer *offer = new Offer(m_Materials_Gui);
   try
   {
     offer->open(filename);
     Offer_Gui *offer_Gui = new Offer_Gui(offer,
                                          m_Settings,
-                                         &m_QMap_Materials,
+                                         m_Materials_Gui,
                                          this);
     m_QMap_Offers.insert(offer,
                          offer_Gui);
@@ -232,48 +253,6 @@ void MainWindow::on_m_QAction_File_Settings_triggered()
 void MainWindow::on_m_QAction_File_Exit_triggered()
 {
   QApplication::quit();
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-void MainWindow::loadMaterials(const QString &materialsDirectory)
-{
-  // Get material files
-  QDir qDir(materialsDirectory);
-  QFileInfoList qFileInfoList = qDir.entryInfoList(QStringList() << "*" + Material::_CONST::FILENAME_EXTENSION,
-                                                   QDir::Files);
-
-  if(qFileInfoList.isEmpty())
-  {
-     QMessageBox::critical(this,
-                           tr("Error opening material file."),
-                           tr("No material files found in '%1'.").arg(qDir.absolutePath()));
-  }
-
-  // Load Material files
-  foreach (QFileInfo qFileInfo, qFileInfoList)
-  {
-    Material *material = new Material(qFileInfo);
-    try
-    {
-      material->Load();
-      m_QMap_Materials.insert(material->getName(),
-                              material);
-    }
-    catch(const Exception &exception)
-    {
-      QMessageBox::critical(this,
-                            tr("Error opening material file."),
-                            exception.GetText());
-    }
-  }
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-void MainWindow::closeMaterials()
-{
-
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

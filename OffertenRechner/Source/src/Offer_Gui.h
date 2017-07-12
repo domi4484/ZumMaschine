@@ -7,13 +7,13 @@
 // Qt includes -----------------------------
 #include <QWidget>
 #include <QSystemTrayIcon>
-#include <QMap>
 
 // Forward declarations --------------------
 namespace Ui { class Offer_Gui; }
 class Offer;
 class Settings;
 class Material;
+class Materials_Gui;
 class QFileSystemModel;
 class QFileSystemWatcher;
 
@@ -38,7 +38,7 @@ public:
 
   explicit Offer_Gui(Offer *offer,
                      Settings *settings,
-                     QMap<QString, Material *> *qMap_Materials,
+                     Materials_Gui *qMap_Materials,
                      QWidget *parent = 0);
   ~Offer_Gui();
     
@@ -68,8 +68,8 @@ private:
   // Lik to settings
   Settings *m_Settings;
 
-  // Link to materials
-  QMap<QString, Material *> *m_QMap_Materials;
+  // Link to materials gui
+  Materials_Gui *m_Materials_Gui;
 
   Part *m_CurrentPart;
   QList<Part *> m_QList_Parts;

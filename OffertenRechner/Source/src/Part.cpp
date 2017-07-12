@@ -4,6 +4,7 @@
 
 // Projekt includes ------------------------
 #include "Material.h"
+#include "Materials_Gui.h"
 
 // Qt includes -----------------------------
 
@@ -22,10 +23,10 @@ const QString Part::_CONST::JSON::VALUE_MATERIALNAME     ("MaterialName");
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-Part::Part(QMap<QString, Material*> *qMap_Materials,
+Part::Part(Materials_Gui *materials_Gui,
            QObject *parent) :
   QObject(parent),
-  m_QMap_Materials   (qMap_Materials),
+  m_Materials_Gui   (materials_Gui),
   m_Position         (),
   m_Name             (),
   m_Count            (),
@@ -44,9 +45,9 @@ Part::Part(QMap<QString, Material*> *qMap_Materials,
   m_Price            (0.0),
   m_PriceTot         (0.0)
 {
-  if(qMap_Materials->isEmpty() == false)
+  if(materials_Gui->isEmpty() == false)
   {
-    m_Material = qMap_Materials->first();
+    m_Material = materials_Gui->first();
     m_Thickness_mm = m_Material->getThicknessList().first();
   }
 
@@ -153,7 +154,7 @@ void Part::fromJsonObject(const QJsonObject &qJsonObject_Root)
   m_MaterialIncluded = qJsonObject_Root.value(_CONST::JSON::VALUE_MATERIALINCLUDED).toBool();
 
   QString materialName = qJsonObject_Root.value(_CONST::JSON::VALUE_MATERIALNAME).toString();
-  m_Material = m_QMap_Materials->value(materialName);
+  m_Material = m_Materials_Gui->getMaterial(materialName);
 
   calculate();
 }
