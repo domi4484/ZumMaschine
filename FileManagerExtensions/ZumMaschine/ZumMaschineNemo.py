@@ -71,7 +71,7 @@ class ZumMaschineExtension(GObject.GObject, FileManager.MenuProvider):
     item = FileManager.MenuItem(name  = "Zum Maschine kopieren",
                                 label = "Zum Maschine kopieren",
                                 tip   = "Zum Maschine kopieren %s" % file.get_name(),
-                                icon  = "/home/" + getpass.getuser() + "/.local/share/lowercut/FileManagerExtensions/ZumMaschine/ZumMaschine.png"
+                                icon  = "/home/" + getpass.getuser() + "/.local/share/customcut/FileManagerExtensions/ZumMaschine/ZumMaschine.png"
                                )
     item.connect('activate', self.menu_activate_cb, file)
     

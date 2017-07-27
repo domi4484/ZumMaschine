@@ -6,8 +6,8 @@ function installExtensionEpsToDxf
   echo "Install icon"
   echo "------------"
   echo
-  mkdir -p ~/.local/share/lowercut/FileManagerExtensions/EpsToDxf/
-  cp -v Dxf.png ~/.local/share/lowercut/FileManagerExtensions/EpsToDxf/
+  mkdir -p ~/.local/share/customcut/FileManagerExtensions/EpsToDxf/
+  cp -v Dxf.png ~/.local/share/customcut/FileManagerExtensions/EpsToDxf/
 
   echo
   echo "----------------------"

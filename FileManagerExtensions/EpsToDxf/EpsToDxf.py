@@ -54,7 +54,7 @@ class EpsToDxfExtension(GObject.GObject, FileManager.MenuProvider):
     item = FileManager.MenuItem(name  = "Zumdxfkonvertieren",
                                 label = "Zum dxf konvertieren",
                                 tip   = "Zum dxf konvertieren %s" % file.get_name(),
-                                icon  = "/home/" + getpass.getuser() + "/.local/share/lowercut/FileManagerExtensions/EpsToDxf/Dxf.png"
+                                icon  = "/home/" + getpass.getuser() + "/.local/share/customcut/FileManagerExtensions/EpsToDxf/Dxf.png"
                                )
     item.connect('activate', self.menu_activate_cb, file)
     
@@ -63,6 +63,6 @@ class EpsToDxfExtension(GObject.GObject, FileManager.MenuProvider):
   #------------------------------------------------------------------------------------------------------------------------------
 
   def debug(self, message):
-    print "EpsToDxf: " + message
+    print("EpsToDxf: " + message)
 
     

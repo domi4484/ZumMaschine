@@ -6,8 +6,8 @@ function installExtensionZumMaschine
   echo "Install icon"
   echo "------------"
   echo
-  mkdir -p ~/.local/share/lowercut/FileManagerExtensions/ZumMaschine/
-  cp -v ZumMaschine.png ~/.local/share/lowercut/FileManagerExtensions/ZumMaschine/
+  mkdir -p ~/.local/share/customcut/FileManagerExtensions/ZumMaschine/
+  cp -v ZumMaschine.png ~/.local/share/customcut/FileManagerExtensions/ZumMaschine/
 
   echo
   echo "----------------------"
