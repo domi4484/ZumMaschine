@@ -15,8 +15,9 @@ function installExtensionZumMaschine
   echo "----------------------"
   echo
   NEMO_EXTENSIONS=~/.local/share/nemo-python/extensions
+  rm $NEMO_EXTENSIONS/ZumMaschineNemo.py
   mkdir -p $NEMO_EXTENSIONS
-  cp -v ZumMaschineNemo.py $NEMO_EXTENSIONS
+  cp -v ZumMaschine.py $NEMO_EXTENSIONS
   echo
   nemo -q
 
@@ -26,8 +27,9 @@ function installExtensionZumMaschine
   echo "--------------------------"
   echo
   NAUTILUS_EXTENSIONS=~/.local/share/nautilus-python/extensions
+  rm $NEMO_EXTENSIONS/ZumMaschineNautilus.py
   mkdir -p $NAUTILUS_EXTENSIONS
-  cp -v ZumMaschineNautilus.py $NAUTILUS_EXTENSIONS
+  cp -v ZumMaschine.py $NAUTILUS_EXTENSIONS
   echo
   nautilus -q
 }

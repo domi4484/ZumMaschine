@@ -3,12 +3,17 @@
 
 from gi.repository import GObject
 
-#from gi.repository import Nemo as FileManager
-from gi.repository import Nautilus as FileManager
-
 import getpass
 import os
 import shutil
+
+# Nemo or Nautilus
+scriptPath = os.path.realpath(__file__)
+if "nemo-python/extensions" in scriptPath:
+  from gi.repository import Nemo as FileManager
+else:
+  from gi.repository import Nautilus as FileManager
+
 
 class ZumMaschineExtension(GObject.GObject, FileManager.MenuProvider):
 

@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 
 # Install in ~/.local/share/nemo-python/extensions
 
