@@ -6,6 +6,7 @@ echo "Install Dependencies"
 echo "--------------------"
 echo
 sudo apt-get install -y python-nemo python-nautilus pstoedit
+# OpenSUSE installare anche typelib-1_0-Nautilus-3_0 e typelib-1_0-Nemo-3_0
 
 echo
 echo "----------------"
