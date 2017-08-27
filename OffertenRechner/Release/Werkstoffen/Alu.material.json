@@ -15,6 +15,11 @@
       "Thickness":4,
       "SurfaceValue":95,
       "CutValue":21
+    },
+        {
+      "Thickness":5,
+      "SurfaceValue":115,
+      "CutValue":21
     }
   ]
 }
