@@ -8,8 +8,10 @@
 #include "Material.h"
 
 // Qt includes -----------------------------
+#include <QDesktopServices>
 #include <QDir>
 #include <QMessageBox>
+#include <QUrl>
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
@@ -102,7 +104,18 @@ QList<Material *> Materials_Gui::getList()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void Materials_Gui::on_m_QTreeWidget_doubleClicked(const QModelIndex &index)
+void Materials_Gui::on_m_QTreeWidget_itemDoubleClicked(QTreeWidgetItem *qTreeWidgetItem,
+                                                       int column)
 {
+  Q_UNUSED(column);
 
+  if(qTreeWidgetItem == NULL)
+    return;
+
+  Material *material = m_QMap_Materials.value(qTreeWidgetItem->text(0),
+                                              NULL);
+  if(material == NULL)
+    return;
+
+  QDesktopServices::openUrl(QUrl(material->getFileInfo().filePath()));
 }

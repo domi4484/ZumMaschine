@@ -91,6 +91,13 @@ QString Material::getName() const
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+QFileInfo Material::getFileInfo() const
+{
+  return m_QFileInfo;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 QList<double> Material::getThicknessList() const
 {
   return m_QMap_Values.keys();

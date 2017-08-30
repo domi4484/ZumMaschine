@@ -36,6 +36,7 @@ public:
   void Load();
 
   QString getName() const;
+  QFileInfo getFileInfo() const;
 
   QList<double> getThicknessList() const;
   double getSurfaceValue(double thickness) const;

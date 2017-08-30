@@ -8,6 +8,7 @@
 // Forward declarations --------------------
 namespace Ui { class Materials_Gui; }
 class Material;
+class QTreeWidgetItem;
 
 class Materials_Gui : public QWidget
 {
@@ -28,7 +29,8 @@ public:
 
 private slots:
 
-  void on_m_QTreeWidget_doubleClicked(const QModelIndex &index);
+  void on_m_QTreeWidget_itemDoubleClicked(QTreeWidgetItem *qTreeWidgetItem,
+                                          int column);
 
 private:
 
