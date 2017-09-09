@@ -235,7 +235,33 @@ void MainWindow::on_m_QAction_File_Save_triggered()
 
 void MainWindow::on_m_QAction_File_SaveAs_triggered()
 {
+  try
+  {
+    Offer_Gui *offer_Gui = qobject_cast<Offer_Gui *>(m_Ui->m_QTabWidget->currentWidget());
+    Offer *offer = offer_Gui->getOffer();
 
+
+    QString filename = QFileDialog::getSaveFileName(this,
+                                                    tr("Save offer"),
+                                                    "",
+                                                    "*" + Offer::_CONST::FILENAME_EXTENSION);
+
+    if(filename.isEmpty())
+      return;
+
+    if(filename.endsWith(Offer::_CONST::FILENAME_EXTENSION) == false)
+    {
+      filename.append(Offer::_CONST::FILENAME_EXTENSION);
+    }
+
+    offer->save(filename);
+  }
+  catch(const Exception &exception)
+  {
+    QMessageBox::critical(this,
+                          tr("Error saving offer."),
+                          exception.GetText());
+  }
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

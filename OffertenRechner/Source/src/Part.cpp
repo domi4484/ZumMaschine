@@ -56,6 +56,14 @@ Part::Part(Materials_Gui *materials_Gui,
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+void Part::setPosition(int position)
+{
+  m_Position = position;
+  emit changed();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 void Part::setName(const QString &name)
 {
   m_Name = name;
@@ -165,8 +173,16 @@ QJsonObject Part::toJsonObject() const
 {
   QJsonObject qJsonObject_Root;
 
-  qJsonObject_Root.insert(_CONST::JSON::VALUE_NAME,
-                          m_Name);
+  qJsonObject_Root.insert(_CONST::JSON::VALUE_POSITION,         m_Position);
+  qJsonObject_Root.insert(_CONST::JSON::VALUE_NAME,             m_Name);
+
+  qJsonObject_Root.insert(_CONST::JSON::VALUE_COUNT,            m_Count);
+  qJsonObject_Root.insert(_CONST::JSON::VALUE_WIDTH_MM,         m_Width_mm);
+  qJsonObject_Root.insert(_CONST::JSON::VALUE_HEIGHT_MM,        m_Height_mm);
+  qJsonObject_Root.insert(_CONST::JSON::VALUE_THICKNESS_MM,     m_Thickness_mm);
+  qJsonObject_Root.insert(_CONST::JSON::VALUE_CUTLENGTH_M,      m_CutLenght_m);
+  qJsonObject_Root.insert(_CONST::JSON::VALUE_MATERIALINCLUDED, m_MaterialIncluded);
+  qJsonObject_Root.insert(_CONST::JSON::VALUE_MATERIALNAME,     m_Material->getName());
 
   return qJsonObject_Root;
 }

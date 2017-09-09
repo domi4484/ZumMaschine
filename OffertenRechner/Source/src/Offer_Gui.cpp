@@ -7,6 +7,7 @@
 #include "Exception.h"
 #include "Material.h"
 #include "Materials_Gui.h"
+#include "Offer.h"
 #include "Settings.h"
 #include "Settings_Gui.h"
 
@@ -23,14 +24,13 @@
 Offer_Gui::Offer_Gui(Offer *offer,
                      Settings *settings,
                      Materials_Gui *materials_Gui,
-                     QWidget *parent) :
-  QWidget(parent),
-  m_Ui(new Ui::Offer_Gui),
-  m_Offer(offer),
-  m_Settings(settings),
-  m_Materials_Gui(materials_Gui),
-  m_CurrentPart(NULL),
-  m_QList_Parts()
+                     QWidget *parent)
+  : QWidget(parent)
+  , m_Ui(new Ui::Offer_Gui)
+  , m_Offer(offer)
+  , m_Settings(settings)
+  , m_Materials_Gui(materials_Gui)
+  , m_CurrentPart(NULL)
 {
   // Qt ui setup
   m_Ui->setupUi(this);
@@ -45,10 +45,14 @@ Offer_Gui::Offer_Gui(Offer *offer,
   m_Ui->m_QTreeWidget->setColumnWidth(Column_Price,      50);
   m_Ui->m_QTreeWidget->setColumnWidth(Column_PriceTotal, 50);
 
-  // Default Piece
-  Part *part = new Part(m_Materials_Gui);
-  m_QList_Parts.append(part);
-  m_CurrentPart = part;
+  if(m_Offer->getPartsList().isEmpty())
+  {
+    m_CurrentPart = m_Offer->addNewPart();
+  }
+  else
+  {
+    m_CurrentPart = m_Offer->getPartsList().first();
+  }
 
   // Clear materials in Gui
   m_Ui->m_QComboBox_Material->clear();
@@ -59,7 +63,7 @@ Offer_Gui::Offer_Gui(Offer *offer,
     m_Ui->m_QComboBox_Material->addItem(material->getName());
   }
 
-  connect(part,
+  connect(m_CurrentPart,
           SIGNAL(changed()),
           SLOT(slot_Part_Changed()));
 
@@ -70,11 +74,6 @@ Offer_Gui::Offer_Gui(Offer *offer,
 
 Offer_Gui::~Offer_Gui()
 {
-  while(m_QList_Parts.isEmpty() == false)
-  {
-    delete m_QList_Parts.takeLast();
-  }
-
   delete m_Ui;
 }
 
@@ -155,26 +154,26 @@ void Offer_Gui::updatePartsList()
   m_Ui->m_QTreeWidget->clear();
 
   double total = 0.0;
-  for (int i=0; i<m_QList_Parts.size(); i++)
+  foreach (Part *part, m_Offer->getPartsList())
   {
     QTreeWidgetItem *qTreeWidgetItem = new QTreeWidgetItem(m_Ui->m_QTreeWidget);
-    qTreeWidgetItem->setText(Column_Position,   QString::number(i));
-    qTreeWidgetItem->setText(Column_Quantity,   QString::number(m_QList_Parts.at(i)->getCount()));
-    qTreeWidgetItem->setText(Column_Name,       m_QList_Parts.at(i)->getName());
-    qTreeWidgetItem->setText(Column_Size,       QString("%1x%2").arg(m_QList_Parts.at(i)->getWidth_mm())
-                                                                .arg(m_QList_Parts.at(i)->getHeight_mm()));
-    qTreeWidgetItem->setText(Column_Thickness,  QString::number(m_QList_Parts.at(i)->getThickness_mm()));
-    qTreeWidgetItem->setText(Column_CutLength,  QString::number(m_QList_Parts.at(i)->getCutLenght_m()));
-    if(m_QList_Parts.at(i)->getMaterial() != NULL)
+    qTreeWidgetItem->setText(Column_Position,   QString::number(part->getPosition()));
+    qTreeWidgetItem->setText(Column_Quantity,   QString::number(part->getCount()));
+    qTreeWidgetItem->setText(Column_Name,       part->getName());
+    qTreeWidgetItem->setText(Column_Size,       QString("%1x%2").arg(part->getWidth_mm())
+                                                                .arg(part->getHeight_mm()));
+    qTreeWidgetItem->setText(Column_Thickness,  QString::number(part->getThickness_mm()));
+    qTreeWidgetItem->setText(Column_CutLength,  QString::number(part->getCutLenght_m()));
+    if(part->getMaterial() != NULL)
     {
-      qTreeWidgetItem->setText(Column_Material,   m_QList_Parts.at(i)->getMaterial()->getName());
+      qTreeWidgetItem->setText(Column_Material, part->getMaterial()->getName());
     }
-    qTreeWidgetItem->setText(Column_Price,      QString::number(m_QList_Parts.at(i)->getPrice()   , 'f', 2));
-    qTreeWidgetItem->setText(Column_PriceTotal, QString::number(m_QList_Parts.at(i)->getPriceTot(), 'f', 2));
+    qTreeWidgetItem->setText(Column_Price,      QString::number(part->getPrice()   , 'f', 2));
+    qTreeWidgetItem->setText(Column_PriceTotal, QString::number(part->getPriceTot(), 'f', 2));
 
     m_Ui->m_QTreeWidget->addTopLevelItem(qTreeWidgetItem);
 
-    total += m_QList_Parts.at(i)->getPriceTot();
+    total += part->getPriceTot();
   }
   m_Ui->m_QLabel_ListTotal->setText(QString::number(total));
 }
@@ -209,4 +208,18 @@ void Offer_Gui::on_m_QComboBox_Material_currentIndexChanged(const QString &value
   {
     m_Ui->m_QComboBox_Thickness->addItem(QString::number(thickness));
   }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Offer_Gui::on_m_QLineEdit_Name_textChanged(const QString &arg1)
+{
+  m_CurrentPart->setName(arg1);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Offer_Gui::on_m_QCheckBox_MaterialIncluded_toggled(bool checked)
+{
+  m_CurrentPart->setMaterialIncluded(checked);
 }

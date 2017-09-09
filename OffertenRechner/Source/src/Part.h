@@ -35,6 +35,7 @@ public:
   explicit Part(Materials_Gui *materials_Gui,
                 QObject *parent = 0);
 
+  void setPosition(int position);
   void setName(const QString &name);
   void setCount(int count);
   void setWidth_mm(double width_mm);
@@ -44,6 +45,7 @@ public:
   void setMaterialIncluded(bool included);
   void setMaterial(Material *material);
 
+  int       getPosition()         const { return m_Position;         }
   QString   getName()             const { return m_Name;             }
   int       getCount()            const { return m_Count;            }
   double    getWidth_mm()         const { return m_Width_mm;         }

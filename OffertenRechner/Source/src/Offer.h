@@ -31,12 +31,16 @@ public:
 
   explicit Offer(Materials_Gui *materials_Gui,
                  QObject *parent = 0);
+  virtual ~Offer();
 
   void setName(const QString &name);
 
   QString   getName() const { return m_Name; }
   QString   getFilename() const { return m_QFileInfo.fileName(); }
   QFileInfo getFileInfo() const { return m_QFileInfo; }
+
+  Part *addNewPart();
+  QList<Part *> getPartsList() const;
 
   bool isModified() const { return m_Modified; }
   void open(const QString &filename);
@@ -48,6 +52,10 @@ public:
 signals:
 
   void changed();
+
+private slots:
+
+  void slot_part_changed();
 
 private:
 

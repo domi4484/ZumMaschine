@@ -26,10 +26,21 @@ Offer::Offer(Materials_Gui *materials_Gui,
   : QObject(parent)
   , m_Materials_Gui(materials_Gui)
   , m_Name()
+  , m_QFileInfo()
   , m_QList_Parts()
-  , m_Modified(true)
+  , m_Modified(false)
 {
+}
 
+//-----------------------------------------------------------------------------------------------------------------------------
+
+Offer::~Offer()
+{
+  foreach (Part *part, m_QList_Parts)
+  {
+    delete part;
+  }
+  m_QList_Parts.clear();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -42,6 +53,27 @@ void Offer::setName(const QString &name)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+Part *Offer::addNewPart()
+{
+  Part *part = new Part(m_Materials_Gui);
+  m_QList_Parts.append(part);
+
+  QObject::connect(part,
+                   SIGNAL(changed()),
+                   SLOT(slot_part_changed()));
+
+  return part;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+QList<Part *> Offer::getPartsList() const
+{
+  return m_QList_Parts;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 void Offer::open(const QString &filename)
 {
   if(filename.isEmpty())
@@ -50,6 +82,7 @@ void Offer::open(const QString &filename)
   }
 
   m_QFileInfo.setFile(filename);
+  m_Name = m_QFileInfo.baseName();
 
   QFile qFile(m_QFileInfo.filePath());
   if(qFile.open(QIODevice::ReadOnly | QIODevice::Text)
@@ -76,6 +109,9 @@ void Offer::save(const QString &filename)
   if(filename.isEmpty() == false)
     m_QFileInfo.setFile(filename);
 
+  if(m_Name != m_QFileInfo.baseName())
+    m_Name = m_QFileInfo.baseName();
+
   QJsonDocument qJsonDocument;
   qJsonDocument.setObject(Offer::toJsonObject());
 
@@ -87,13 +123,22 @@ void Offer::save(const QString &filename)
   }
 
   qFile.write(qJsonDocument.toJson());
+
+  m_Modified = false;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 void Offer::fromJsonObject(const QJsonObject &qJsonObject_Root)
 {
-  m_Name = qJsonObject_Root.value(_CONST::JSON::VALUE_NAME).toString();
+  // Clear current parts
+  foreach (Part *part, m_QList_Parts)
+  {
+    delete part;
+  }
+  m_QList_Parts.clear();
+
+//  m_Name = qJsonObject_Root.value(_CONST::JSON::VALUE_NAME).toString();
 
   m_QList_Parts.clear();
   QJsonArray qJsonArray_Parts = qJsonObject_Root.value(_CONST::JSON::ARRAY_PARTS).toArray();
@@ -109,8 +154,6 @@ void Offer::fromJsonObject(const QJsonObject &qJsonObject_Root)
             SIGNAL(changed()),
             SLOT(slot_part_changed()));
   }
-
-  emit changed();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -121,6 +164,27 @@ QJsonObject Offer::toJsonObject() const
   qJsonObject_Root.insert(_CONST::JSON::VALUE_NAME,
                           m_Name);
 
+  if(m_QList_Parts.isEmpty() == false)
+  {
+    QJsonArray qJsonArray_Parts;
+
+    foreach (Part *part, m_QList_Parts)
+    {
+      qJsonArray_Parts.append(part->toJsonObject());
+    }
+
+    qJsonObject_Root.insert(_CONST::JSON::ARRAY_PARTS,
+                            qJsonArray_Parts);
+  }
+
   return qJsonObject_Root;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Offer::slot_part_changed()
+{
+  m_Modified = true;
+  emit changed();
 }
 
