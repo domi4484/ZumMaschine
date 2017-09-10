@@ -17,8 +17,13 @@
       "CutValue":16
     },
     {
+      "Thickness":8,
+      "SurfaceValue":180,
+      "CutValue":32
+    },
+    {
       "Thickness":30,
-      "SurfaceValue":90,
+      "SurfaceValue":300,
       "CutValue":45
     }
   ]

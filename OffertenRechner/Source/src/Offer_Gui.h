@@ -16,6 +16,7 @@ class Material;
 class Materials_Gui;
 class QFileSystemModel;
 class QFileSystemWatcher;
+class QTreeWidgetItem;
 
 class Offer_Gui : public QWidget
 {
@@ -46,7 +47,7 @@ public:
 
 private slots:
 
-  void slot_Part_Changed();
+  void slot_Offer_Changed();
 
   void on_m_QAction_File_Settings_triggered();
 
@@ -62,6 +63,14 @@ private slots:
   void on_m_QLineEdit_Name_textChanged(const QString &arg1);
 
   void on_m_QCheckBox_MaterialIncluded_toggled(bool checked);
+
+  void on_m_QToolButton_PartAdd_clicked();
+  void on_m_QToolButton_PartRemove_clicked();
+  void on_m_QToolButton_PartUp_clicked();
+  void on_m_QToolButton_PartDown_clicked();
+
+  void on_m_QTreeWidget_currentItemChanged(QTreeWidgetItem *current,
+                                           QTreeWidgetItem *previous);
 
 private:
 

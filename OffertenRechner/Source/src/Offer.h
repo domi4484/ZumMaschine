@@ -40,6 +40,7 @@ public:
   QFileInfo getFileInfo() const { return m_QFileInfo; }
 
   Part *addNewPart();
+  Part *getPart(int position) const;
   QList<Part *> getPartsList() const;
 
   bool isModified() const { return m_Modified; }

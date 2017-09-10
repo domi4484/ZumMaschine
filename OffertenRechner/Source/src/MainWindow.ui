@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>919</width>
-    <height>601</height>
+    <width>1392</width>
+    <height>750</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -54,8 +54,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>919</width>
-     <height>27</height>
+     <width>1392</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -76,6 +76,10 @@
    <addaction name="menuFile"/>
   </widget>
   <action name="m_QAction_File_Exit">
+   <property name="icon">
+    <iconset resource="Resources/Resources.qrc">
+     <normaloff>:/Icons/application-exit.png</normaloff>:/Icons/application-exit.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Exit</string>
    </property>
@@ -97,6 +101,10 @@
    </property>
   </action>
   <action name="m_QAction_File_Save">
+   <property name="icon">
+    <iconset resource="Resources/Resources.qrc">
+     <normaloff>:/Icons/save.png</normaloff>:/Icons/save.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Save</string>
    </property>
@@ -105,6 +113,10 @@
    </property>
   </action>
   <action name="m_QAction_File_SaveAs">
+   <property name="icon">
+    <iconset resource="Resources/Resources.qrc">
+     <normaloff>:/Icons/save-as.png</normaloff>:/Icons/save-as.png</iconset>
+   </property>
    <property name="text">
     <string>Sa&amp;ve as</string>
    </property>
@@ -113,6 +125,10 @@
    </property>
   </action>
   <action name="m_QAction_File_Open">
+   <property name="icon">
+    <iconset resource="Resources/Resources.qrc">
+     <normaloff>:/Icons/open.png</normaloff>:/Icons/open.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Open</string>
    </property>
@@ -122,6 +138,8 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="Resources/Resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

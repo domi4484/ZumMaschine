@@ -63,11 +63,11 @@ Offer_Gui::Offer_Gui(Offer *offer,
     m_Ui->m_QComboBox_Material->addItem(material->getName());
   }
 
-  connect(m_CurrentPart,
+  connect(m_Offer,
           SIGNAL(changed()),
-          SLOT(slot_Part_Changed()));
+          SLOT(slot_Offer_Changed()));
 
-  slot_Part_Changed();
+  slot_Offer_Changed();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -79,7 +79,7 @@ Offer_Gui::~Offer_Gui()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void Offer_Gui::slot_Part_Changed()
+void Offer_Gui::slot_Offer_Changed()
 {
   m_Ui->m_QLineEdit_Name                         ->setText(m_CurrentPart->getName());
   m_Ui->m_QSpinBox_Pieces                        ->setValue(m_CurrentPart->getCount());
@@ -173,6 +173,10 @@ void Offer_Gui::updatePartsList()
 
     m_Ui->m_QTreeWidget->addTopLevelItem(qTreeWidgetItem);
 
+    // Set selected row
+    if(part == m_CurrentPart)
+      qTreeWidgetItem->setSelected(true);
+
     total += part->getPriceTot();
   }
   m_Ui->m_QLabel_ListTotal->setText(QString::number(total));
@@ -222,4 +226,49 @@ void Offer_Gui::on_m_QLineEdit_Name_textChanged(const QString &arg1)
 void Offer_Gui::on_m_QCheckBox_MaterialIncluded_toggled(bool checked)
 {
   m_CurrentPart->setMaterialIncluded(checked);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Offer_Gui::on_m_QToolButton_PartAdd_clicked()
+{
+  m_CurrentPart = m_Offer->addNewPart();
+  slot_Offer_Changed();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Offer_Gui::on_m_QToolButton_PartRemove_clicked()
+{
+
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Offer_Gui::on_m_QToolButton_PartUp_clicked()
+{
+
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Offer_Gui::on_m_QToolButton_PartDown_clicked()
+{
+
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Offer_Gui::on_m_QTreeWidget_currentItemChanged(QTreeWidgetItem *current,
+                                                    QTreeWidgetItem *previous)
+{
+  qDebug() << "on_m_QTreeWidget_currentItemChanged";
+
+  Q_UNUSED(previous);
+
+  if(current == NULL)
+    return;
+
+  m_CurrentPart = m_Offer->getPart(current->text(0).toInt());
+  slot_Offer_Changed();
 }

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>919</width>
+    <width>1268</width>
     <height>601</height>
    </rect>
   </property>
@@ -15,21 +15,43 @@
     <layout class="QGridLayout" name="gridLayout" columnstretch="0,0,0,0,0,0,0,0,2">
      <item row="1" column="8" rowspan="4">
       <layout class="QGridLayout" name="gridLayout_3">
+       <item row="1" column="0">
+        <widget class="QToolButton" name="m_QToolButton_PartAdd">
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="icon">
+          <iconset resource="Resources/Resources.qrc">
+           <normaloff>:/Icons/plus.png</normaloff>:/Icons/plus.png</iconset>
+         </property>
+        </widget>
+       </item>
        <item row="1" column="2">
+        <widget class="QToolButton" name="m_QToolButton_PartUp">
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="icon">
+          <iconset resource="Resources/Resources.qrc">
+           <normaloff>:/Icons/up.png</normaloff>:/Icons/up.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="6">
         <widget class="QLabel" name="m_QLabel_ListTotal">
          <property name="text">
           <string>0.0</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
+       <item row="1" column="5">
         <widget class="QLabel" name="label_11">
          <property name="text">
           <string>Tot:</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
+       <item row="1" column="4">
         <spacer name="horizontalSpacer_2">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -42,7 +64,7 @@
          </property>
         </spacer>
        </item>
-       <item row="0" column="0" colspan="3">
+       <item row="0" column="0" colspan="7">
         <widget class="QTreeWidget" name="m_QTreeWidget">
          <column>
           <property name="text">
@@ -89,6 +111,28 @@
            <string>Preis Tot</string>
           </property>
          </column>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QToolButton" name="m_QToolButton_PartRemove">
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="icon">
+          <iconset resource="Resources/Resources.qrc">
+           <normaloff>:/Icons/minus.png</normaloff>:/Icons/minus.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QToolButton" name="m_QToolButton_PartDown">
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="icon">
+          <iconset resource="Resources/Resources.qrc">
+           <normaloff>:/Icons/down.png</normaloff>:/Icons/down.png</iconset>
+         </property>
         </widget>
        </item>
       </layout>
@@ -188,11 +232,17 @@
         </item>
         <item row="3" column="2">
          <widget class="QDoubleSpinBox" name="m_QDoubleSpinBox_CutLength">
+          <property name="decimals">
+           <number>3</number>
+          </property>
           <property name="minimum">
-           <double>0.010000000000000</double>
+           <double>0.000000000000000</double>
           </property>
           <property name="maximum">
            <double>900000.000000000000000</double>
+          </property>
+          <property name="value">
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -445,6 +495,8 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="Resources/Resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

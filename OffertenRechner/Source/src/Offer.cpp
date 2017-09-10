@@ -57,12 +57,26 @@ Part *Offer::addNewPart()
 {
   Part *part = new Part(m_Materials_Gui);
   m_QList_Parts.append(part);
+  part->setPosition(m_QList_Parts.size());
 
   QObject::connect(part,
                    SIGNAL(changed()),
                    SLOT(slot_part_changed()));
 
   return part;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+Part *Offer::getPart(int position) const
+{
+  foreach (Part *part, m_QList_Parts)
+  {
+    if(part->getPosition() == position)
+      return part;
+  }
+
+  return NULL;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
