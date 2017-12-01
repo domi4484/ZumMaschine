@@ -1,5 +1,7 @@
 #!/bin/bash
 
+SCRIPT_DIRECTORY="$(dirname "$0")"
+
 echo
 echo "--------------------"
 echo "Install Dependencies"
@@ -15,8 +17,7 @@ echo "----------------"
 echo
 cd EpsToDxf
 source install.sh
-installExtensionEpsToDxf
-cd "$(dirname "$0")"
+cd ..
 
 echo
 echo "-------------------"
@@ -25,6 +26,5 @@ echo "-------------------"
 echo
 cd ZumMaschine
 source install.sh
-installExtensionZumMaschine
-cd "$(dirname "$0")"
+cd ..
   
