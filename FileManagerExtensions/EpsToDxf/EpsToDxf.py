@@ -15,6 +15,49 @@ if "nemo-python/extensions" in scriptPath:
 else:
   from gi.repository import Nautilus as FileManager
 
+#------------------------------------------------------------------------------------------------------------------------------
+
+def debug(message):
+    print("EpsToDxf: " + message)
+
+#------------------------------------------------------------------------------------------------------------------------------
+
+class EpsToDxfConverter:
+  
+  def __init__(self):
+    pass
+  
+  #------------------------------------------------------------------------------------------------------------------------------
+  
+  def setSourceFilename(self, sourceFilename):
+      self._sourceFilename = sourceFilename
+      
+  #------------------------------------------------------------------------------------------------------------------------------
+  
+  def setDestinationFilename(self, destinationFilename):
+      self._destinationFilename = destinationFilename
+      
+  #------------------------------------------------------------------------------------------------------------------------------
+      
+  def executeConversion(self):
+    
+    debug("Convert '" + self._sourceFilename + "' to '" + self._destinationFilename + "'")    
+    
+    # Prepare command
+    command = ['pstoedit', '-f', 'dxf:-mm' , self._sourceFilename, self._destinationFilename]
+    # pstoedit -f "dxf_s: -mm -splineaspolyline -splineprecision 8"  OldCaptain_300x300_3.eps OldCaptain_300x300_3.dxf
+    debug("Command: " + " ".join(command))    
+    
+    # Execute
+    process = subprocess.Popen(command, stdout=subprocess.PIPE)
+    output, error = process.communicate()
+    debug("pstoedit output: " + str(output))
+    debug("pstoedit error: " + str(error))
+    debug("Conversion finished")
+      
+  
+#------------------------------------------------------------------------------------------------------------------------------
+  
 
 class EpsToDxfExtension(GObject.GObject, FileManager.MenuProvider):
 
@@ -31,15 +74,17 @@ class EpsToDxfExtension(GObject.GObject, FileManager.MenuProvider):
     # Default result filename
     filenameDxf = filenameEps.replace('.eps', '.dxf')
     
+    
+    
     # Copy dxf file
     command = ['pstoedit', '-f', 'dxf:-mm' , filenameEps, filenameDxf]
     # pstoedit -f "dxf_s: -mm -splineaspolyline -splineprecision 8"  OldCaptain_300x300_3.eps OldCaptain_300x300_3.dxf
     process = subprocess.Popen(command, stdout=subprocess.PIPE)
     output, error = process.communicate()
-    self.debug("pstoedit output: " + output)
-    self.debug("pstoedit error: " + str(error))
-    self.debug("")
-    self.debug("File " + filenameEps + " converted to " + filenameDxf)
+    debug("pstoedit output: " + output)
+    debug("pstoedit error: " + str(error))
+    debug("")
+    debug("File " + filenameEps + " converted to " + filenameDxf)
     
   #------------------------------------------------------------------------------------------------------------------------------
 
@@ -64,9 +109,20 @@ class EpsToDxfExtension(GObject.GObject, FileManager.MenuProvider):
     
     return [item]
 
-  #------------------------------------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------------------
 
-  def debug(self, message):
-    print("EpsToDxf: " + message)
+
+
+def main():
+  
+  debug("Executing main()")
+  
+  epsToDxfConverter = EpsToDxfConverter()
+  epsToDxfConverter.setSourceFilename("source.eps")
+  epsToDxfConverter.setDestinationFilename("source.dxf")
+  epsToDxfConverter.executeConversion()
+
+if __name__ == "__main__":
+  main()
 
     
