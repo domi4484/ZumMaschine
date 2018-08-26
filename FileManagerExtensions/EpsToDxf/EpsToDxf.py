@@ -25,22 +25,22 @@ def debug(message):
 #------------------------------------------------------------------------------------------------------------------------------
 
 class EpsToDxfConverter:
-  
+
   def __init__(self):
     pass
-  
+
   #------------------------------------------------------------------------------------------------------------------------------
-  
+
   def setSourceFilename(self, sourceFilename):
       self._sourceFilename = sourceFilename
-      
+
   #------------------------------------------------------------------------------------------------------------------------------
-  
+
   def setDestinationFilename(self, destinationFilename):
       self._destinationFilename = destinationFilename
-      
+
   #------------------------------------------------------------------------------------------------------------------------------
-      
+
   def executeConversion(self):
     
     debug("Convert '" + self._sourceFilename + "' to '" + self._destinationFilename + "'")    
@@ -56,10 +56,8 @@ class EpsToDxfConverter:
     debug("pstoedit output: " + str(output))
     debug("pstoedit error: " + str(error))
     debug("Conversion finished")
-      
-  
+
 #------------------------------------------------------------------------------------------------------------------------------
-  
 
 class EpsToDxfExtension(GObject.GObject, FileManager.MenuProvider):
 
@@ -105,7 +103,6 @@ class EpsToDxfExtension(GObject.GObject, FileManager.MenuProvider):
     return [item]
 
 #------------------------------------------------------------------------------------------------------------------------------
-
 
 
 def main():
