@@ -1,6 +1,8 @@
 
 # Install in ~/.local/share/nemo-python/extensions
 
+# V1.0.0
+
 from gi.repository import GObject
 
 import getpass
@@ -74,17 +76,10 @@ class EpsToDxfExtension(GObject.GObject, FileManager.MenuProvider):
     # Default result filename
     filenameDxf = filenameEps.replace('.eps', '.dxf')
     
-    
-    
-    # Copy dxf file
-    command = ['pstoedit', '-f', 'dxf:-mm' , filenameEps, filenameDxf]
-    # pstoedit -f "dxf_s: -mm -splineaspolyline -splineprecision 8"  OldCaptain_300x300_3.eps OldCaptain_300x300_3.dxf
-    process = subprocess.Popen(command, stdout=subprocess.PIPE)
-    output, error = process.communicate()
-    debug("pstoedit output: " + output)
-    debug("pstoedit error: " + str(error))
-    debug("")
-    debug("File " + filenameEps + " converted to " + filenameDxf)
+    epsToDxfConverter = EpsToDxfConverter()
+    epsToDxfConverter.setSourceFilename(filenameEps)
+    epsToDxfConverter.setDestinationFilename(filenameDxf)
+    epsToDxfConverter.executeConversion()
     
   #------------------------------------------------------------------------------------------------------------------------------
 
