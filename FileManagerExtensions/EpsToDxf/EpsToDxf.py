@@ -1,13 +1,13 @@
 
 # Install in ~/.local/share/nemo-python/extensions
 
-# V1.0.0
+# V1.0.1
 
 from gi.repository import GObject
 
+import datetime
 import getpass
 import os
-import shutil
 import subprocess
 
 # Nemo or Nautilus
@@ -20,7 +20,15 @@ else:
 #------------------------------------------------------------------------------------------------------------------------------
 
 def debug(message):
-    print("EpsToDxf: " + message)
+    
+    debugMessage = '{0} [EpsToDxf] {1}'.format(str(datetime.datetime.now()), 
+                                               message)
+    
+    print(debugMessage)
+    
+    traceFilename = '{0}.trace'.format(os.path.realpath(__file__))
+    with open(traceFilename, 'a') as traceFile:
+      traceFile.write('{0}\n'.format(debugMessage))
 
 #------------------------------------------------------------------------------------------------------------------------------
 
