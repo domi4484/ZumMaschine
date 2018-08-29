@@ -1,0 +1,9 @@
+
+import importDXF
+
+documentName_GetCutLenghtDocument = "GetCutLenghtDocument"
+document_GetCutLenghtDocument = FreeCAD.newDocument(documentName_GetCutLenghtDocument)
+
+importDXF.insert(u"/home/domi/Zeichnung.dxf",
+                 documentName_GetCutLenghtDocument)
+
