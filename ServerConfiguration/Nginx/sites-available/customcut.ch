@@ -1,20 +1,9 @@
 server {
-#    listen      138.68.87.82:443 default;
     listen      138.68.87.82:80 default;
-#    server_name 138.68.87.82;
     server_name customcut.ch www.customcut.ch;
 
     access_log  /var/log/nginx/customcut.access.log;
     error_log   /var/log/nginx/customcut.error.log;
-
-#    ssl on;
-#    ssl_certificate     /etc/ssl/certs/nginx-selfsigned.crt;
-#    ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
-#    keepalive_timeout   60;
-
-#    ssl_ciphers             HIGH:!ADH:!MD5;
-#    ssl_protocols           SSLv3 TLSv1;
-#    ssl_prefer_server_ciphers on;
 
     # Allow bigger body size for nextcloud clients uploads
     client_max_body_size        10G;
@@ -58,21 +47,4 @@ server {
 
 }
 
-# This allows for someone to go to http and get redirected to https automatically
-server {
-    listen      10.0.1.43:80;
-    server_name 10.0.1.43;
-
-    add_header Strict-Transport-Security max-age=2592000;
-    rewrite ^/.*$ https://$host$request_uri? permanent;
-}
-
-## This allows for someone who may have bookmarked the url with the 8069 port and redirects them to https automatically
-#server {
-#    listen      10.0.1.43:8069;
-#    server_name 10.0.1.43;
-#
-#    add_header Strict-Transport-Security max-age=2592000;
-#    rewrite ^/.*$ https://$host$request_uri? permanent;
-#}
 
