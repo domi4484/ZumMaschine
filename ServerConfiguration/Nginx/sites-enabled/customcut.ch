@@ -1,1 +1,1 @@
-/etc/nginx/sites-available/customcut.ch
+../sites-available/customcut.ch

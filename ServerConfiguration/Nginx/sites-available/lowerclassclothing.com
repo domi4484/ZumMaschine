@@ -1,6 +1,10 @@
+# Istruzioni:
+# https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-server-blocks-virtual-hosts-on-ubuntu-14-04-lts
+
 server {
 
-    listen      138.68.87.82:80 default;
+#    listen      138.68.87.82:80 default;
+    listen      138.68.87.82:80;
 
     server_name lowerclassclothing.com www.lowerclassclothing.com;
 
